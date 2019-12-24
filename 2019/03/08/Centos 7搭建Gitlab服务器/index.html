@@ -46,29 +46,31 @@
   };
 </script>
 
-  <meta name="description" content="忙碌的闲人">
-<meta property="og:type" content="website">
-<meta property="og:title" content="UNXLAB">
-<meta property="og:url" content="http://unxlab.com/index.html">
+  <meta name="description" content="CentOS搭建GitLab服务器 Centos 7搭建Gitlab服务器###GitLab简介：  GitLab 是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的web服务。安装方法是参考GitLab在GitHub上的Wiki页面。GitLab是由GitLabInc.开发，使用MIT许可证的基于网络的Git仓库管理工具，且具有wiki和issue跟踪功能。使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos 7搭建Gitlab服务器">
+<meta property="og:url" content="http://unxlab.com/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
 <meta property="og:site_name" content="UNXLAB">
-<meta property="og:description" content="忙碌的闲人">
+<meta property="og:description" content="CentOS搭建GitLab服务器 Centos 7搭建Gitlab服务器###GitLab简介：  GitLab 是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的web服务。安装方法是参考GitLab在GitHub上的Wiki页面。GitLab是由GitLabInc.开发，使用MIT许可证的基于网络的Git仓库管理工具，且具有wiki和issue跟踪功能。使用">
+<meta property="article:published_time" content="2019-03-08T12:18:45.697Z">
+<meta property="article:modified_time" content="2019-12-24T13:42:24.023Z">
 <meta property="article:author" content="Maple_Yu">
 <meta property="article:tag" content="technology，OPS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://unxlab.com/">
+<link rel="canonical" href="http://unxlab.com/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>UNXLAB</title>
+  <title>Centos 7搭建Gitlab服务器 | UNXLAB</title>
   
 
 
@@ -179,146 +181,10 @@
             
 
   <div class="posts-expand">
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/12/24/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Maple_Yu">
-      <meta itemprop="description" content="忙碌的闲人">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="UNXLAB">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/24/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-12-24 10:46:34 / Modified: 21:45:21" itemprop="dateCreated datePublished" datetime="2019-12-24T10:46:34+08:00">2019-12-24</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/12/24/hello-world/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
   
   
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/03/15/Markdown%20%E8%AF%AD%E6%B3%95%E5%92%8C%20MWeb%20%E5%86%99%E4%BD%9C%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Maple_Yu">
-      <meta itemprop="description" content="忙碌的闲人">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="UNXLAB">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/15/Markdown%20%E8%AF%AD%E6%B3%95%E5%92%8C%20MWeb%20%E5%86%99%E4%BD%9C%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="post-title-link" itemprop="url">Markdown 语法和 MWeb 写作使用说明</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-15 15:55:34" itemprop="dateCreated datePublished" datetime="2019-03-15T15:55:34+08:00">2019-03-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Markdown-语法和-MWeb-写作使用说明"><a href="#Markdown-语法和-MWeb-写作使用说明" class="headerlink" title="Markdown 语法和 MWeb 写作使用说明"></a>Markdown 语法和 MWeb 写作使用说明</h1><h2 id="Markdown-的设计哲学"><a href="#Markdown-的设计哲学" class="headerlink" title="Markdown 的设计哲学"></a>Markdown 的设计哲学</h2><blockquote>
-<p>Markdown 的目標是實現「易讀易寫」。<br>不過最需要強調的便是它的可讀性。一份使用 Markdown 格式撰寫的文件應該可以直接以純文字發佈，並且看起來不會像是由許多標籤或是格式指令所構成。<br>Markdown 的語法有個主要的目的：用來作為一種網路內容的<em>寫作</em>用語言。</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/03/15/Markdown%20%E8%AF%AD%E6%B3%95%E5%92%8C%20MWeb%20%E5%86%99%E4%BD%9C%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -332,8 +198,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">Centos 7搭建Gitlab服务器</a>
+          Centos 7搭建Gitlab服务器
         </h1>
 
         <div class="post-meta">
@@ -364,37 +229,69 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>CentOS搭建GitLab服务器</p>
+        <p>CentOS搭建GitLab服务器</p>
 <h1 id="Centos-7搭建Gitlab服务器"><a href="#Centos-7搭建Gitlab服务器" class="headerlink" title="Centos 7搭建Gitlab服务器"></a>Centos 7搭建Gitlab服务器</h1><p>###GitLab简介：</p>
 <blockquote>
 <p>GitLab 是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的web服务。安装方法是参考GitLab在GitHub上的Wiki页面。<br>GitLab是由GitLabInc.开发，使用MIT许可证的基于网络的Git仓库管理工具，且具有wiki和issue跟踪功能。使用Git作为代码管理工具，并在此基础上搭建起来的web服务。<br>由乌克兰程序员DmitriyZaporozhets和ValerySizov开发，它由Ruby写成。后来，一些部分用Go语言重写。截止2018年5月，该公司约有290名团队成员，以及2000多名开源贡献者。GitLab被IBM，Sony，JülichResearchCenter，NASA，Alibaba，Invincea，O’ReillyMedia，Leibniz-Rechenzentrum(LRZ)，CERN，SpaceX等组织使用。</p>
 </blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+<a id="more"></a>
+<p>###Why GitLab？</p>
+<p>提供Git项目仓库托管服务的是业界闻名的GitHub，但你要将代码上传到GitHub上，而且将项目设为私有是需要收费的。而GitLab则是开源免费的（社区版免费，企业版需订阅）。同样是采用Ruby on Rails开发，可以让你在自己的内网搭建一个“高仿”版的GitHub。企业的代码管理使用GitLab还是非常诱人的。<br>所以本章就GitLab的搭建开一篇，因为同类型的文章网络上数不胜数，造个轮再让自己加深印象也是可以的。</p>
+<p>GitLab的GitHub地址<br><a href="https://github.com/gitlabhq/gitlabhq" target="_blank" rel="noopener">https://github.com/gitlabhq/gitlabhq</a></p>
+<p>###安装前提：<br>GitLab支持在多系统下进行部署：</p>
+<ul>
+<li>Ubuntu</li>
+<li>Debian</li>
+<li>CentOS</li>
+<li>openSUSE</li>
+<li>Red Hat Enterprise Linux (please use the CentOS packages and instructions)</li>
+<li>Scientific Linux (please use the CentOS packages and instructions)</li>
+<li>Oracle Linux (please use the CentOS packages and instructions)</li>
+<li>#####但是不支持以下系统部署GitLab：</li>
+</ul>
+<p><strong>Non-Unix operating systems such as Windows</strong><br>可以看到官方是不支持将来也不会考虑支持的安装平台就是Windows了，如果只有windows，那么可以考虑搞个虚拟机来安装Linux支持版本，再使用GitLab，挺任性。</p>
+<p>#####硬件需求：<br>######CPU：<br>官方建议双核cpu，最多支持500用户。1个核心只支持100用户，同时也会导致程序运行缓慢，这个就按照官方建议来操作。</p>
+<p>######内存：<br>8G，最多支持100个用户。同样按照官方建议来进行配置，因为4G的内存可能会导致配置期间发生<strong>奇怪</strong>的错误，有兴趣的可以研究一下。本章节选择8G内存来进行部署。</p>
+<p>######交换空间（Swap）：<br>至少2G。官方文档提示即使有足够的可用内存，但是足够的交换空间可以在你的内存发生改变时减少发生错误的可能性。</p>
+<p>######存储：<br>够用就行，本章使用的存储为400G，应该足以使用。</p>
+<p>######数据库：<br>PostgreSQL，（version 9.6）这是官方强烈推荐的数据库首选，非常不推荐的是MySQL/MariaDB，因为大部分的GitLab功能在这个数据库上不支持。同时还建议正在使用Mysql／MariaDB的用户尽快迁移到PostgreSQL。</p>
+<p>####部署环境：<br>本次GitLab要部署在CentOS 7上。发行版本是CentOS Linux release 7.6.1810 (Core)<br>内存8G<br>交换空间8G<br>存储空间400G<br>数据库PostgreSQL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@Immaple-GitLab ~]# cat &#x2F;etc&#x2F;redhat-release</span><br><span class="line">CentOS Linux release 7.6.1810 (Core)</span><br><span class="line">[root@Immaple-GitLab ~]# free -m</span><br><span class="line">              total        used        free      shared  buff&#x2F;cache   available</span><br><span class="line">Mem:           7868         889        6329          19         649        6653</span><br><span class="line">Swap:          7935           0        7935</span><br><span class="line">[root@Immaple-GitLab ~]# df -lh</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">&#x2F;dev&#x2F;mapper&#x2F;centos-root   50G  3.8G   47G   8% &#x2F;</span><br><span class="line">devtmpfs                 3.9G     0  3.9G   0% &#x2F;dev</span><br><span class="line">tmpfs                    3.9G  4.0K  3.9G   1% &#x2F;dev&#x2F;shm</span><br><span class="line">tmpfs                    3.9G   13M  3.9G   1% &#x2F;run</span><br><span class="line">tmpfs                    3.9G     0  3.9G   0% &#x2F;sys&#x2F;fs&#x2F;cgroup</span><br><span class="line">&#x2F;dev&#x2F;sda1               1014M  205M  810M  21% &#x2F;boot</span><br><span class="line">&#x2F;dev&#x2F;mapper&#x2F;centos-home  342G   33M  342G   1% &#x2F;home</span><br><span class="line">tmpfs                    787M  4.0K  787M   1% &#x2F;run&#x2F;user&#x2F;42</span><br><span class="line">tmpfs                    787M   32K  787M   1% &#x2F;run&#x2F;user&#x2F;0</span><br><span class="line">[root@Immaple-GitLab ~]#</span><br></pre></td></tr></table></figure>
+<p>以上是准备好的安装环境，基本符合GitLab官方推荐需求了。</p>
+<p>###1.安装部署：<br>GitLab提供了两种方式来安装，一种是使用官方打包好的文件，这种方法很简单。也不容易出错；<br>另一种就是手动安装，把代码下载下来，然后安装各种环境，数据库，编译环境等。<br>一步步安装起来，虽然比较麻烦，但是可以安装各种分支版本。比如<a href="https://gitlab.com/larryli/gitlab/tree/7-4-zh" target="_blank" rel="noopener">中文翻译版。</a></p>
+<p>先按照官方推荐版本来进行安装。</p>
+<p>####1.1安装并配置必要的依赖项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y curl policycoreutils-python openssh-server</span><br><span class="line">sudo systemctl enable sshd</span><br><span class="line">sudo systemctl start sshd</span><br><span class="line">sudo firewall-cmd --permanent --add-service&#x3D;http</span><br><span class="line">sudo systemctl reload firewalld</span><br></pre></td></tr></table></figure>
+<p>因为我是root用户，就免了<strong>sudo</strong>。这里犯懒，直接copy了官方的命令来。</p>
+<p>安装Postfix以发送电邮通知，如果要通过其他解决方案的话，可以跳过这个步骤。</p>
+
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/15/Markdown%20%E8%AF%AD%E6%B3%95%E5%92%8C%20MWeb%20%E5%86%99%E4%BD%9C%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" rel="next" title="Markdown 语法和 MWeb 写作使用说明">
+      Markdown 语法和 MWeb 写作使用说明 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
@@ -445,6 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Centos-7搭建Gitlab服务器"><span class="nav-number">1.</span> <span class="nav-text">Centos 7搭建Gitlab服务器</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
