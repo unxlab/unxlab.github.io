@@ -149,7 +149,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">3</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">4</span></a>
 
   </li>
   </ul>
@@ -170,6 +170,88 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/12/24/Git%E5%92%8CGitHub%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BAGitLab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://photo.iammaple.com/touxiang.jpg">
+      <meta itemprop="name" content="Maple_Yu">
+      <meta itemprop="description" content="忙碌的闲人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UNXLAB">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/24/Git%E5%92%8CGitHub%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BAGitLab/" class="post-title-link" itemprop="url">Git和GitHub，以及如何搭建GitLab</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-24 17:24:18 / Modified: 17:24:59" itemprop="dateCreated datePublished" datetime="2019-12-24T17:24:18+08:00">2019-12-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="什么是git？"><a href="#什么是git？" class="headerlink" title="# 什么是git？"></a># 什么是git？</h1><p>“git”是一个<strong>分布式版本控制</strong>软件，版本控制是一种记录一个或若干文件内容的变化，以便将来查阅特定版本修订情况的系统。有了版本控制系统，就可以不用担心文件丢失，不小心误修改文件等“事故”，而且可以随时回到历史记录的某个时刻。git最初由<a href="https://baike.baidu.com/item/%E6%9E%97%E7%BA%B3%E6%96%AF%C2%B7%E6%9C%AC%E7%BA%B3%E7%AC%AC%E5%85%8B%E7%89%B9%C2%B7%E6%89%98%E7%93%A6%E5%85%B9/1034429?fr=aladdin" target="_blank" rel="noopener">林纳斯.托瓦兹</a>创作，2005年以<a href="https://zh.wikipedia.org/wiki/GNU通用公共许可证" target="_blank" rel="noopener">GPL</a>发布（英语：GNU General Public License，缩写GNU GPL 或 GPL）<br><strong>最初的目的是为了更好的管理Linux内核开发而设计</strong></p>
+<p>git最初的开发动力来自于BitKeeper和Monotone，最初只是作为一个可以被其他前端（比如Cogito或者Stgit）包装的后端而开发的，但是后来git内核已经成熟到可以独立地用作版本控制。所以他就开始重点用来做版本控制咯。</p>
+<p>很多著名的软件都在使用git进行版本控制，其中包括Linux内核、X.org服务器和OLPC内核等项目的开发流程。</p>
+<p>####命名来源：<br><img src="https://photo.iammaple.com/blog/220px-Git-logo.png" alt=""><br>林纳斯.托瓦兹自嘲地取了这个名字“git”，这个词源自英国俚语，意思大约是“混账”。<br><strong>“    I’m an egotistical bastard, and I name all my projects after myself. First Linux, now git.    ”</strong></p>
+<p>####git的由来：</p>
+<blockquote>
+<p>自2002年开始，林纳斯·托瓦兹决定使用BitKeeper作为Linux内核主要的版本控制系统用以维护代码。因为BitKeeper为专有软件，这个决定在社群中长期遭受质疑。在Linux社群中，特别是理查德·斯托曼与自由软件基金会的成员，主张应该使用开放源代码的软件来作为Linux内核的版本控制系统。林纳斯·托瓦兹曾考虑过采用现成软件作为版本控制系统（例如Monotone），但这些软件都存在一些问题，特别是性能不佳。现成的方案，如CVS的架构，受到林纳斯·托瓦兹的批评[15]。<br>2005年，安德鲁·垂鸠写了一个简单程序，可以连接BitKeeper的存储库，BitKeeper著作权拥有者拉里·麦沃伊认为安德鲁·垂鸠对BitKeeper内部使用的协议进行逆向工程，决定收回无偿使用BitKeeper的许可。Linux内核开发团队与BitMover公司进行磋商，但无法解决他们之间的歧见。林纳斯·托瓦兹决定自行开发版本控制系统替代BitKeeper，以十天的时间编写出git第一个版本。</p>
+</blockquote>
+<p>牛吧？十天而已，不好用的东西还不给用，那就自己搞一个！！</p>
+<p><a href="https://www.atlassian.com/git/articles/10-years-of-git" target="_blank" rel="noopener">Atlassian公司制作的git十年</a></p>
+<p>####什么是Github？</p>
+<p><img src="https://photo.iammaple.com/blog/20190313011450.png" alt=""></p>
+<blockquote>
+<p>GitHub是通过Git进行版本控制的软件源代码托管服务，由GitHub公司（曾称Logical Awesome）的开发者Chris Wanstrath、PJ Hyett和Tom Preston-Werner使用Ruby on Rails编写而成。<br>GitHub同时提供付费账户和免费账户。这两种账户都可以创建公开或私有的代码仓库，但付费用户支持更多功能。根据在2009年的Git用户调查，GitHub是最流行的Git访问站点。[3]除了允许个人和组织创建和访问保管中的代码以外，它也提供了一些方便社会化共同软件开发的功能，即一般人口中的社群功能，包括允许用户追踪其他用户、组织、软件库的动态，对软件代码的改动和bug提出评论等。GitHub也提供了图表功能，用于概观显示开发者们怎样在代码库上工作以及软件的开发活跃程度。<br>截止到2015年，GitHub已经有超过两千八百万注册用户和7900万代码库。[1]事实上已经成为了世界上最大的代码存放网站和开源社区。[4]<br>2018年6月4日晚上，美国科技公司微软宣布以75亿美元的股票收购GitHub。</p>
+</blockquote>
+<p>GitHub是一个开源项目托管平台，而且，简单说就是一个可以放代码的地方（不过可以放的当然不仅是代码了）。Github还有git代码仓库托管及基本的 Web管理界面以外，还提供了订阅、讨论组、文本渲染、在线文件编辑器、协作图谱（报表）、代码片段分享（Gist）等功能。最近的新闻是微软以75亿美元收购了他。Github是一个比较流行的开源平台了，好多大牛的都在上面开源自己的项目。如果好好利用能从中学到很多。</p>
+<p>网址：<a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a></p>
+<p>####什么是GitLab？<br><img src="https://photo.iammaple.com/blog/20190313011740.png" alt=""></p>
+<blockquote>
+<p>GitLab是由GitLab Inc.开发，使用MIT许可证的基于网络的Git仓库管理工具，且具有wiki和issue跟踪功能。<br>GitLab 由乌克兰程序员 Dmitriy Zaporozhets 和 Valery Sizov 开发，它由 Ruby 写成。后来，一些部分用 Go 语言重写。截止 2018 年 5 月，该公司约有 290 名团队成员[5]，以及 2000 多名开源贡献者。[6] GitLab 被 IBM，Sony，Jülich Research Center，NASA，Alibaba，Invincea，O’Reilly Media，Leibniz-Rechenzentrum (LRZ)，CERN[7][8][9]，SpaceX 等组织使用。</p>
+</blockquote>
+<p>GitLab是由GitLab Inc.开发，使用MIT许可证的基于网络的Git仓库管理工具，且具有wiki和issue跟踪功能。和Github有些类似，不过有个地方不同就是GitLab个人注册用户也可免费创建私有仓库。不过它的的搜索功能感觉不如GitHub好用。IBM，Sony，Jülich Research Center，NASA，Alibaba，Invincea，O’Reilly Media，Leibniz-Rechenzentrum (LRZ)，CERN[7][8][9]，SpaceX 等组织都有在使用GitLab。</p>
+<p>网址：<a href="https://gitlab.com/" target="_blank" rel="noopener">https://gitlab.com/</a></p>
+<p>注：以上网站都是全英文的网站。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -444,7 +526,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
