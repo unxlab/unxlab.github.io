@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://unxlab.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="一、Docker与镜像介绍1.1 云计算平台介绍云计算是一种资源的服务模式，该模式可以实现随时随地、便捷按需地从可配置计算资源共享池中获取所需的资源（网络、服务器、存储、应用及服务），资源能够快速供应并释放，显著的减少了资源管理的工作开销。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker与镜像介绍">
+<meta property="og:url" content="http://unxlab.com/2019/12/25/Docker%E4%B8%8E%E9%95%9C%E5%83%8F%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="UNXLAB">
+<meta property="og:description" content="一、Docker与镜像介绍1.1 云计算平台介绍云计算是一种资源的服务模式，该模式可以实现随时随地、便捷按需地从可配置计算资源共享池中获取所需的资源（网络、服务器、存储、应用及服务），资源能够快速供应并释放，显著的减少了资源管理的工作开销。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://photo.iammaple.com/Docker.png">
+<meta property="article:published_time" content="2019-12-25T03:52:50.000Z">
+<meta property="article:modified_time" content="2019-12-25T04:01:05.000Z">
+<meta property="article:author" content="Maple Yu">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://photo.iammaple.com/Docker.png">
+
+<link rel="canonical" href="http://unxlab.com/2019/12/25/Docker%E4%B8%8E%E9%95%9C%E5%83%8F%E4%BB%8B%E7%BB%8D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Docker与镜像介绍 | UNXLAB</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">UNXLAB</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">给岁月以文明,而不是给文明以岁月.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">1</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">1</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/12/25/Docker%E4%B8%8E%E9%95%9C%E5%83%8F%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://photo.iammaple.com/touxiang.jpg">
+      <meta itemprop="name" content="Maple Yu">
+      <meta itemprop="description" content="忙碌的闲人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UNXLAB">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker与镜像介绍
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-12-25 11:52:50 / 修改时间：12:01:05" itemprop="dateCreated datePublished" datetime="2019-12-25T11:52:50+08:00">2019-12-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="一、Docker与镜像介绍"><a href="#一、Docker与镜像介绍" class="headerlink" title="一、Docker与镜像介绍"></a>一、Docker与镜像介绍</h3><h2 id="1-1-云计算平台介绍"><a href="#1-1-云计算平台介绍" class="headerlink" title="1.1 云计算平台介绍"></a>1.1 云计算平台介绍</h2><p>云计算是一种资源的服务模式，该模式可以实现随时随地、便捷按需地从可配置计算资源共享池中获取所需的资源（网络、服务器、存储、应用及服务），资源能够快速供应并释放，显著的减少了资源管理的工作开销。</p>
+<a id="more"></a>    
+<p>经典云计算架构包括IaaS（Infrastructure as a Service，基础设施即服务）、PasS（Platform-as-a-Service：平台即服务）、SaaS（Software as a Service，软件即服务）三层服务。</p>
+<ol>
+<li>IaaS层为基础设施运维人员服务，提供计算、存储、网络及其他基础资源，云平台使用者可以在上面部署和运行包括操作系统和应用程序在内的任意软件，无需再为基础设施的管理而分心。</li>
+<li>PaaS层为应用开发人员服务，提供支撑应用运行所需的软件运行时的环境、相关工具与服务，如数据库服务、日志服务、监控服务等，让应用开发者可以专注于核心业务的开发。</li>
+<li>SaaS层为一般用户服务，提供了一套完整可用的软件系统，让一般用户无需关注技术细节，只需通过浏览器、应用客户端等方式就能使用部署在云上的应用服务。</li>
+</ol>
+<p>IaaS的发展主要以虚拟机为最小粒度的资源调整单位，出现了资源利用率低、调度分发缓慢、软件堆栈环境不统一等一系列问题。</p>
+<p>PaaS在IaaS的基础上发展而来，众多PaaS已经意识到可以利用容器技术解决资源利用率的问题，但是PaaS通常在应用架构选择、支持的软件环境服务方面有较大的限制，这带来应用与平台无法解耦、应用运行时环境局限性抢、运维人员控制力下降的问题。</p>
+<h2 id="1-2-What-is-Docker？"><a href="#1-2-What-is-Docker？" class="headerlink" title="1.2 What is Docker？"></a>1.2 What is Docker？</h2><p>Docker是以Docker容器来资源分割和调度的基本单位，封装整个运行软件时的环境，为开发者和系统管理员设计，用于构建、发布和运行分布式应用的平台。它是一个跨平台、可移植并且简单易用的容器解决方案。Docker的源代码托管在GitHub上，基于Go语言开发幷遵从Apache 2.0协议。</p>
+<p>Docker自2013年以来非常火热，无论是从 GitHub 上的代码活跃度，还是Redhat在RHEL6.5中集成对Docker的支持, 就连 Google 的 Compute Engine 也支持 docker 在其之上运行。</p>
+<p>Docker可以在容器内快速自动化地部署应用，并通过操作系统内核技术（Namespaces、Cgroups等）为容器提供资源隔离与安全保障。</p>
+<p>Docker是Docker.inc公司开源的一个基于LXC技术之上构建的Container容器引擎。</p>
+<h2 id="1-3-Docker生态系统"><a href="#1-3-Docker生态系统" class="headerlink" title="1.3 Docker生态系统"></a>1.3 Docker生态系统</h2><p>   <img src="https://photo.iammaple.com/Docker.png" alt=""><br> <em>上图为Docker生态系统。</em></p>
+<p>围绕Docker的生态系统，自下而上分别覆盖了IaaS层和PaaS层所涉及的各类问题。包括资源调度、编排、部署、配置管理、网络管理、应用开发和部署平台、应用开发工具、应用服务提供以及大数据分析等计算相关的服务。<br>Docker及其生态系统主要带来一下几点好处：</p>
+<ol>
+<li>持续部署与测试。Docker消除了线上线下的环境差异，保证了应用生命周期的环境一致性和标准化。开发人员使用镜像实现标准开发环境的构建，开发完成后通过封装着完整环境和应用的镜像进行迁移，简化了持续集成、测试和发布的过程。再也不用担心程序员说：“在我电脑上是可以的”这种情况。</li>
+<li>跨云平台支持。Docker最大的好处之一就是其适配性。越来越多的云平台都支持Docker。目前支持Docker的IaaS云平台包括但不限于亚马逊云平台（AWS）、Google云平台（GCP）、微软云平台（Azure）、OpenStack等，还包括Chef、Puppet、Ansible等配置管理工具。</li>
+<li>环境标准化版本控制。可以使用Git等工具对Docker镜像进行版本控制，一旦出现故障可以快速回滚。相比以前的虚拟机镜像、Docker压缩和备份速度更快，镜像启动页像启动一个普通进程一样快速。</li>
+<li>高资源利用率与隔离。Docker容器没有管理程序的额外开销，与底层共享操作系统，性能更加优良，系统负载更低，在同等条件下可以运行更多的应用实例，可以更充分地利用系统资源。同时，Docker拥有不错的资源隔离与限制能力，可以精确地对应用分配CPU、内存等资源，保证了应用间不会互相影响。</li>
+<li>容器跨平台与镜像。Linux容器虽然早在Linux 2.6版本中内核已经存在，但是缺少容器的跨平台性，难以推广。Docker在原有的Linux容器的基础上进行了大胆革新，为容器设定了一整套标准化的配置方法，将应用及其所依赖的运行环境打包成镜像，真正实现了“构建一次，到处运行”的理念，显著提高了容器的跨平台行。</li>
+<li>易于理解且易用。一个开发者可以在15分钟内入门Docker并进行安装和部署。</li>
+<li>应用镜像仓库。Docker官方构建了一个镜像仓库，组织和管理形式类似于GitHub，上面已经积累了成千上万的镜像。因为Docker的跨平台的适配性，相当于为用户提供了非常有用的应用商店，所有人都可以自由下载微服务组件。</li>
+</ol>
+<h2 id="1-4-Docker容器与传统虚拟机技术的不同之处"><a href="#1-4-Docker容器与传统虚拟机技术的不同之处" class="headerlink" title="1.4 Docker容器与传统虚拟机技术的不同之处"></a>1.4 Docker容器与传统虚拟机技术的不同之处</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>容器</th>
+<th>虚拟机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动</td>
+<td>秒级</td>
+<td>分钟级</td>
+</tr>
+<tr>
+<td>硬盘使用</td>
+<td>一般MB</td>
+<td>一般GB</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>接近原生</td>
+<td>弱于原生</td>
+</tr>
+<tr>
+<td>系统支持量</td>
+<td>单机支持上千个容器</td>
+<td>一般几十个</td>
+</tr>
+</tbody></table>
+<p>传统方式实在硬件层面实现虚拟化，需要额外的虚拟机管理应用和虚拟机操作系统层。Docker容器是在操作系统层面上实现虚拟化，直接复用本机本地的操作系统，因此更加轻量级，性能方面也更加高效。Docker从0.9版本开始使用Libcontainer替代LXC。</p>
+<h2 id="1-5-Docker三大核心概念"><a href="#1-5-Docker三大核心概念" class="headerlink" title="1.5 Docker三大核心概念"></a>1.5 Docker三大核心概念</h2><h4 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h4><p>Docker镜像（image）类似于虚拟机的镜像，可以将它理解为一个面向Docker引擎的只读模板，包含了文件系统。<br>例如：一个镜像可以只包含一个完整的CentOS操作系统环境，可以把它称之为一个CentOS镜像，镜像也可以安装了Nginx应用程序（或用户需要的其他软件），可以把它称之为一个Nginx镜像。</p>
+<p>镜像是创建Docker容器的基础，通过版本管理和增量的文件系统，Docker提供了一套十分简单的机制（仓库）创建和更新现有的镜像，用户可以从网上下载一个已经做好的应用镜像，并通过命令直接创建Docker容器来使用。</p>
+<p>Docker运行容器前需要本地存在对应的镜像，如果镜像不存本地，Docker会尝试先从默认镜像仓库下载（默认使用Docker Hub公共注册服务器中的仓库），用户也可以通过配置使用自定义的镜像仓库。（因为国内网络环境屏蔽了该公共仓库，所以大部分用户都是用自定义仓库或国内其他厂商的公共镜像仓库）</p>
+<h4 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h4><p>Docker容器（Container）类似于一个箱子，可以把容器看做是一个简易的Linux系统环境（其中包括root用户权限、进程空间、用户空间和网络空间等），以及运行在其中的应用程序打包而成的一个箱子。Docker 利用容器这个箱子来隔离和运行应用镜像。</p>
+<p>容器是从镜像创建的应用运行实例，可以对它进行启动、停止、删除等常规的操作。这些不同的容器之间都是相互隔离互不可见的。镜像自身是只读的，容器从镜像启动的时候，Docker会在镜像的最上层创建一个可写层，镜像本身将保持不变。</p>
+<h4 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h4><p>Docker仓库（Repository）类似于代码的仓库（与Svn、Git、Maven等概念类似）是Docker用来集中存放文件的场所。<br>根据所存储的镜像是否公开分享，Docker仓库又分为：公开仓库和私有仓库。</p>
+<p>顾名思义，公开仓库就是公共开放的镜像存储的地方，目前最大的公开仓库是Docker Hub （registry.hub.docker.com），存放了大量的镜像可供下载使用，国内的公开仓库有阿里云（acs-public-mirror.oss-cn-hangzhou.aliyuncs.com）。</p>
+<p>私有仓库是内部使用的私有不对外开放的仓库，企业或个人用户可以自行搭建，内部分享镜像，方便快捷的分享专属环境的镜像文件。</p>
+<h2 id="1-6-容器化思维"><a href="#1-6-容器化思维" class="headerlink" title="1.6 容器化思维"></a>1.6 容器化思维</h2><p>如今已迈入互联网+的时代，各行各业更加广泛地与互联网技术结合，软件成为连接人与人、人与企业、企业与企业之间的桥梁，互联网+时代对应用开发迭代的速度和质量有了更高的要求，开发者也渐渐由单纯的开发进入到开发、维护、发布的全过程之中（DevOps）。应用开发模式正在朝着微服务模式发展，所谓的微服务模式有三大特性：</p>
+<ul>
+<li>彼此独立。微服务模式下的每一个组成部分，都是一个独立的服务。有一整套完整的运行机制以及标准化的对外接口。不依赖于其他部分就能正常运行，同时可以探测其他组成部分的存在。</li>
+<li>原子化。微服务应该是不可再分的原子化服务。如果一个服务还能继续划分为几个更小的服务，那便不能称之为微服务，而更像是由多个微服务组成的“微系统”。</li>
+<li>组合和重构。微服务的最大特点就在于它能快速的组合和重构，彼此组合成一个系统。系统里所有的实体在逻辑上是等价的。因此它的结构相对简单和松散，具有极强的可扩展性和鲁棒性（Robust，意为健壮和强壮）。</li>
+</ul>
+<p>容器化思维就等于微服务化思维，每个容器承载着一个微服务，容器之间彼此独立正常运行，每个容器中只允许一个进程，容器间可以快速组合重构，形成一个更大的系统，所以使用Docker时需要关注容器本身，时刻提醒自己使用的是容器，享受它带来的种种便利，比如快速的应用分发能力、高效的操作及反应能力、弹性灵活的部署能力以及低廉的部署成本；同时我们也要转变思维模式，学习适应容器化的管理方式。容器的本质是一个系统进程加上一套运行时库的文件系统封装，而针对容器，我们需要监控、资源控制、配置管理、安全维护等。</p>
+<h2 id="知识小拓展："><a href="#知识小拓展：" class="headerlink" title="知识小拓展："></a>知识小拓展：</h2><hr>
+<blockquote>
+<p>鲁棒是Robust的音译，也就是健壮和强壮的意思。它是在异常和危险情况下系统生存的关键。比如说，计算机软件在输入错误、磁盘故障、网络过载或有意攻击情况下，能否不死机、不崩溃，就是该软件的鲁棒性。所谓“鲁棒性”，是指控制系统在一定（结构，大小）的参数摄动下，维持其它某些性能的特性。根据对性能的不同定义，可分为稳定鲁棒性和性能鲁棒性。以闭环系统的鲁棒性作为目标设计得到的固定控制器称为鲁棒控制器。<br><em>信息来源百度百科</em></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Maple Yu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://unxlab.com/2019/12/25/Docker%E4%B8%8E%E9%95%9C%E5%83%8F%E4%BB%8B%E7%BB%8D/" title="Docker与镜像介绍">http://unxlab.com/2019/12/25/Docker与镜像介绍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/24/Markdown%20%E8%AF%AD%E6%B3%95%E5%92%8C%20MWeb%20005/" rel="prev" title="Markdown 语法和 MWeb 005">
+      <i class="fa fa-chevron-left"></i> Markdown 语法和 MWeb 005
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/25/%E4%BA%8C%E3%80%81Docker%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E9%83%A8%E7%BD%B2/" rel="next" title="二、Docker安装与简单部署">
+      二、Docker安装与简单部署 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、Docker与镜像介绍"><span class="nav-number">1.</span> <span class="nav-text">一、Docker与镜像介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-云计算平台介绍"><span class="nav-number"></span> <span class="nav-text">1.1 云计算平台介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-What-is-Docker？"><span class="nav-number"></span> <span class="nav-text">1.2 What is Docker？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Docker生态系统"><span class="nav-number"></span> <span class="nav-text">1.3 Docker生态系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-Docker容器与传统虚拟机技术的不同之处"><span class="nav-number"></span> <span class="nav-text">1.4 Docker容器与传统虚拟机技术的不同之处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-Docker三大核心概念"><span class="nav-number"></span> <span class="nav-text">1.5 Docker三大核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#镜像"><span class="nav-number">0.1.</span> <span class="nav-text">镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器"><span class="nav-number">0.2.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#仓库"><span class="nav-number">0.3.</span> <span class="nav-text">仓库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-容器化思维"><span class="nav-number"></span> <span class="nav-text">1.6 容器化思维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识小拓展："><span class="nav-number"></span> <span class="nav-text">知识小拓展：</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Maple Yu"
+      src="https://photo.iammaple.com/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Maple Yu</p>
+  <div class="site-description" itemprop="description">忙碌的闲人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:maple_yu@126.com" title="E-Mail → mailto:maple_yu@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i>Google</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+  <div class="beian"><a href="http://www.beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备18001342号 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Maple Yu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

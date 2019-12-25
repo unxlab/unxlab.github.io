@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://unxlab.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="二、Docker安装与简单部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二、Docker安装与简单部署">
+<meta property="og:url" content="http://unxlab.com/2019/12/25/%E4%BA%8C%E3%80%81Docker%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="UNXLAB">
+<meta property="og:description" content="二、Docker安装与简单部署">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://photo.iammaple.com/20190307152945.png">
+<meta property="og:image" content="https://photo.iammaple.com/20190307153521.png">
+<meta property="og:image" content="https://photo.iammaple.com/20190307153545.png">
+<meta property="og:image" content="https://photo.iammaple.com/20190307160116.png">
+<meta property="og:image" content="https://photo.iammaple.com/20190307160613.png">
+<meta property="article:published_time" content="2019-12-25T04:02:13.000Z">
+<meta property="article:modified_time" content="2019-12-25T04:07:30.000Z">
+<meta property="article:author" content="Maple Yu">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://photo.iammaple.com/20190307152945.png">
+
+<link rel="canonical" href="http://unxlab.com/2019/12/25/%E4%BA%8C%E3%80%81Docker%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E9%83%A8%E7%BD%B2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>二、Docker安装与简单部署 | UNXLAB</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">UNXLAB</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">给岁月以文明,而不是给文明以岁月.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">1</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">1</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/12/25/%E4%BA%8C%E3%80%81Docker%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E9%83%A8%E7%BD%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://photo.iammaple.com/touxiang.jpg">
+      <meta itemprop="name" content="Maple Yu">
+      <meta itemprop="description" content="忙碌的闲人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UNXLAB">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          二、Docker安装与简单部署
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-12-25 12:02:13 / 修改时间：12:07:30" itemprop="dateCreated datePublished" datetime="2019-12-25T12:02:13+08:00">2019-12-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="二、Docker安装与简单部署"><a href="#二、Docker安装与简单部署" class="headerlink" title="二、Docker安装与简单部署"></a>二、Docker安装与简单部署</h1><a id="more"></a>
+<p>Docker官网：<a href="https://www.docker.com" target="_blank" rel="noopener">https://www.docker.com</a><br>官网文档：<a href="https://docs.docker.com" target="_blank" rel="noopener">https://docs.docker.com</a><br>CentOS安装Docker：<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/centos/</a><br>###1. Docker的安装基本要求</p>
+<ul>
+<li>Docker只支持64位CPU构架的计算机，目前不支持32位CPU。</li>
+<li>建议系统的Linux内核版本为3.10及以上。</li>
+<li>Linux内核需开启cgroups（注1）和namespace功能（注2）</li>
+<li>对于非Linux内核的平台，如Microsoft Windows和Mac OS X，需要安装使用Boot2Docker工具。</li>
+</ul>
+<p>##1.1 Docker的安装<br><code># cat ／etc/redhat-release</code><br>查看Linux版本<br><img src="https://photo.iammaple.com/20190307152945.png" alt=""></p>
+<p><code>#yum install docker -y</code></p>
+<p>CentOS 7系统，CentOS-Extras源中已内置Docker，安装就这一条命令而已。</p>
+<p><img src="https://photo.iammaple.com/20190307153521.png" alt=""><br><img src="https://photo.iammaple.com/20190307153545.png" alt=""></p>
+<p><code># docker --version #查看docker版本</code></p>
+<p><img src="https://photo.iammaple.com/20190307160116.png" alt=""></p>
+<p><code># service docker start #启动Docker服务</code></p>
+<p><img src="https://photo.iammaple.com/20190307160613.png" alt=""></p>
+<p><code># docker run hello-world #测试</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Immaple-Docker ~]# docker run hello-world</span><br><span class="line">Unable to find image &#39;hello-world:latest&#39; locally</span><br><span class="line">Trying to pull repository docker.io&#x2F;library&#x2F;hello-world ...</span><br><span class="line">&#x2F;usr&#x2F;bin&#x2F;docker-current: </span><br><span class="line">Get https:&#x2F;&#x2F;registry-1.docker.io&#x2F;v2&#x2F;library&#x2F;hello-world&#x2F;manifests&#x2F;latest: Get https:&#x2F;&#x2F;auth.docker.io&#x2F;token?scope&#x3D;repository%3Alibrary%2Fhello-world%3Apull&amp;service&#x3D;registry.docker.io: net&#x2F;http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers).</span><br><span class="line">See &#39;&#x2F;usr&#x2F;bin&#x2F;docker-current run --help&#39;.</span><br></pre></td></tr></table></figure>
+<p>命令执行成功了。只是我的本地没有Hello-World：latest的镜像。</p>
+<p>##1.2 Docker的操作参数：<br>用户在使用Docker时，需要使用Docker命令工具docker与Docker daemon建立通信。Docker daemon是Docker的守护进程，负责接收并分发执行Docker命令。</p>
+<p><code>#docker --help # 查看操作参数</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">用法：</span><br><span class="line">docker [OPTIONS] COMMAND [arg...]</span><br><span class="line">docker [ --help | -v | --version ]</span><br><span class="line">选项：</span><br><span class="line">--config&#x3D;~&#x2F;.docker       #客户端配置文件的位置</span><br><span class="line">-D, --debug              #启动调试模式</span><br><span class="line">-H, --host&#x3D;[]            #守护进程套接字（s）连接到</span><br><span class="line">-h, --help               #打印帮助</span><br><span class="line">-l, --log-level&#x3D;info     #设置日志记录级别</span><br><span class="line">--tls                    #使用TLS;implied by --tlsverify</span><br><span class="line">--tlscacert&#x3D;~&#x2F;.docker&#x2F;ca.pem     #仅由此CA签署的信任证书</span><br><span class="line">--tlscert&#x3D;~&#x2F;.docker&#x2F;cert.pem     #TLS证书文件的路径</span><br><span class="line">--tlskey&#x3D;~&#x2F;.docker&#x2F;key.pem       #TLS密钥文件的路径</span><br><span class="line">--tlsverify                      #使用TLS并验证远程</span><br><span class="line">-v, --version                    #打印版本信息并退出</span><br><span class="line">命令：</span><br><span class="line">attach       #附加到正在运行的容器</span><br><span class="line">build        #从Dockerfile构建一个镜像</span><br><span class="line">commit       #从容器的更改中创建一个新的镜像</span><br><span class="line">cp          #在容器和本地文件系统之间复制文件&#x2F;文件夹</span><br><span class="line">create      #创建一个新的容器</span><br><span class="line">diff        #检查容器文件系统上的更改</span><br><span class="line">events      #从服务器获取实时事件</span><br><span class="line">exec        #在正在运行的容器中运行命令</span><br><span class="line">export      #将容器的文件系统导出为tar存档</span><br><span class="line">history     #显示镜像的历史</span><br><span class="line">images      #镜像列表</span><br><span class="line">import      #从tarball中导入内容以创建文件系统映像</span><br><span class="line">info        #显示系统环境信息</span><br><span class="line">inspect     #检查返回容器，镜像或任务的低级信息</span><br><span class="line">kill        #杀死一个或多个正在运行的容器</span><br><span class="line">load        #从tar归档或STDIN加载镜像</span><br><span class="line">login       #登录到Docker镜像库。</span><br><span class="line">logout      #从Docker镜像库中注销。</span><br><span class="line">logs        #获取容器的日志</span><br><span class="line">network     #管理Docker网络</span><br><span class="line">node        #管理Docker Swarm节点</span><br><span class="line">pause       #暂停一个或多个容器内的所有进程</span><br><span class="line">port        #列出端口映射或容器的特定映射</span><br><span class="line">ps          #容器列表</span><br><span class="line">pull        #从镜像库中拉出镜像或存储库</span><br><span class="line">push        #推送镜像或存储库到镜像库</span><br><span class="line">rename      #重命名一个容器</span><br><span class="line">restart     #重启一个容器</span><br><span class="line">rm          #删除一个或多个容器</span><br><span class="line">rmi         #rmi删除一个或多个镜像</span><br><span class="line">run         #在新容器中运行命令</span><br><span class="line">save        #将一个或多个镜像保存到tar归档文件（默认流式传输到STDOUT）</span><br><span class="line">search      #在Docker Hub中搜索镜像</span><br><span class="line">service           #管理Docker服务</span><br><span class="line">start       #动一个或多个停止的容器</span><br><span class="line">stats      #信息显示容器资源使用的实时统计信息</span><br><span class="line">stop      #停止一个或多个运行容器</span><br><span class="line">swarm     #管理Docker Swarm</span><br><span class="line">tag       #将镜像标记到存储库中</span><br><span class="line">top       #显示容器的运行过程</span><br><span class="line">unpause   #暂停取消暂停一个或多个容器内的所有进程</span><br><span class="line">update    #更新一个或多个容器的配置</span><br><span class="line">version   #显示Docker版本信息</span><br><span class="line">volume    #管理Docker卷</span><br><span class="line">wait      #阻塞直到容器停止，然后打印其退出代码</span><br><span class="line">&#96;&#96;&#96;  </span><br><span class="line">对单个子命令执行help可以查看此子命令的详细用法，如下面对rmi执行查看。</span><br><span class="line"></span><br><span class="line">&#96;# docker rmi --help&#96;</span><br></pre></td></tr></table></figure>
+<p>[root@Immaple-Docker ~]# docker rmi –help</p>
+<p>Usage:    docker rmi [OPTIONS] IMAGE [IMAGE…]</p>
+<p>Remove one or more images</p>
+<p>Options:<br>  -f, –force      Force removal of the image<br>      –help       Print usage<br>      –no-prune   Do not delete untagged parents</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">根据命令的用途进行分类：</span><br><span class="line"></span><br><span class="line">| 子命令分类 | 子命令           |</span><br><span class="line">| --- | --- |</span><br><span class="line">| Docker环境信息 | info、version  |</span><br><span class="line">| 容器生命周期管理 | create、exec、kill、pause、restart、rm、run、start、stop、unpause |</span><br><span class="line">| 镜像管理 | build、images、import、load、rmi、save、tag、commit |</span><br><span class="line">| 镜像仓库命令 | login、logout、pull、push、search  |</span><br><span class="line">| 容器运维操作 | attach、export、inspect、port、ps、rename、stats、stop、wait、cp、diff |</span><br><span class="line">| 系统日志信息 | events、history、logs |</span><br><span class="line"></span><br><span class="line">##1.3 Docker的命令结构图，如下：</span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307162337.png)</span><br><span class="line">*图片来自百度*</span><br><span class="line"></span><br><span class="line">##2.Docker镜像</span><br><span class="line">###2.1 什么是Docker镜像？</span><br><span class="line">    </span><br><span class="line">Docker镜像是含有启动Docker容器所需的文件系统及其内容，因此是启动了一个Docker容器的基础。</span><br><span class="line">Docker镜像采用分层的结构构件，最底层是bootfs，之上的部分是roofs，其组织结构如下：</span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307163244.png)</span><br><span class="line">####bootfs：</span><br><span class="line"></span><br><span class="line">bootfs是Docker镜像最底层的引导文件系统，包括bootloader和操作系统内核，类似于传统的Linux／Unix引导文件系统。然而，Docker用户很少有机会直接与bootfs打交道，并且在容器启动完毕之后，为了节省内存空间，bootfs将会被卸载。</span><br><span class="line"></span><br><span class="line">####rootfs：</span><br><span class="line">rootfs位于bootfs之上，是Docker容器在启动时内部进程可见的文件系统，即Docker容器的根目录。</span><br><span class="line">rootfs通常包含一个操作系统运行所需的文件系统，例如可能包含典型的类Unix操作系统中的的目录系统，如／dev，／tmp等，以及运行Docker容器所需的配置文件、工具等。</span><br><span class="line"></span><br><span class="line">在Docker的构架中，当Docker daemon为Docker容器挂在rootfs时，沿用了Linux内核启动时的方法，即将rootfs设置为只读模式。在挂载完毕之后，利用联合挂载（union mount）技术在已有的只读rootfs上再挂载一个读写层，这样可读写层处于Docker容器文件系统的最顶层，其下可能联合挂载了多个读写层，并隐藏只读层中的老版本文件，这样的技术被称为写时复制（Copy On Write）。联合挂载技术可以在一个挂载点同时挂载多个文件系统，将挂载点的原目录与被挂载内容进行整合，使得最终可见的文件系统将会包含整合之后的各层的文件和目录。</span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307164026.png)</span><br><span class="line">*如上图，实现这种联合挂载技术的文件系统通常被称为联合文件系统（union filesystem）。由于初始挂载时读写层为空，所以从用户的角度看，改容器的文件系统与底层的rootfs没有差别。当需要修改镜像内的某个文件时，只对处于最上方的读写层进行了变动，不覆盖下层已有文件系统的内容，已有文件在只读层中的原始版本依然存在，但会被读写层中的新文件所隐藏，当docker commit这个修改过的容器文件系统为一个新的镜像时，保存内容仅为最上层读写文件系统中被更新过的文件。</span><br><span class="line">###2.2 镜像的存储组织方式</span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307164326.png)</span><br><span class="line">*上图是一个完整的、在运行的容器的所有文件系统结构的描述。上图体现了镜像的层级结构，里面有volume、init-layer、可读写层这些概念。可读写层（read-write Layer以及volume）、init-layer、只读层（read-only layer）这三层结构共同组成一个容器所需的下层文件系统，它们通过联合挂载的方式巧妙的表现为一层，使得容器进程对这些层的存在一点都不知道。*</span><br><span class="line"></span><br><span class="line">Docker镜像系统实际分成了多层，任何一层和它直接或者间接依赖的所有层构成一个镜像，镜像分层机制提供的复用特性使得存储一个新的镜像时只需要保存修改的内容而不是全部文件。</span><br><span class="line"></span><br><span class="line">###2.3 镜像关键概念</span><br><span class="line"></span><br><span class="line">####registry</span><br><span class="line">每个Docker容器都将从Docker镜像生成，registry用以保存Docker镜像，其中包括镜像层次结构和关于镜像的元数据，可以将registry理解为类似于Git仓库之类的实体。</span><br><span class="line"></span><br><span class="line">除了使用官方的公用registry（即Git Hub），由Docker公司维护的公共镜像仓库，其中包含了超过45000个公共镜像供用户下载使用。</span><br><span class="line">Docker Hub中有两种类型的仓库，即用户仓库（user repository）与顶层仓库（top-level repository）。用户仓库由普通的Docker Hub用户创建，顶层仓库由Docker公司负责维护，提供官方版本镜像。</span><br><span class="line">理论上，顶层仓库中的镜像经过Docker公司验证，被认为是架构良好且安全的。</span><br><span class="line">####index</span><br><span class="line"></span><br><span class="line">registry负责存储和提供真正的镜像，而index则类似于registry的索引，负责管理用户账号、访问权限认证、搜索镜像以及为镜像打标签等事务。</span><br><span class="line">当用户执行docker search时，真正搜索的是index，而非registry。当执行docker push或docker pull时，则由index判断使用者是否有拉取或推送相应镜像及访问registry的权限，而registry则是将需要存储或拉取镜像存储的实际位置。</span><br><span class="line"></span><br><span class="line">####graph</span><br><span class="line"></span><br><span class="line">从registry中下载的Docker镜像需要保存在本地，这一功能由Docker graph完成。</span><br><span class="line">在graph的本地目录中&#x2F;var&#x2F;lib&#x2F;docker&#x2F;devicemapper&#x2F;devicemapper中,保存了每一个下载到本地的Docker镜像的主体文件，在／var／lib／docker／image目录下保存了每一个下载到本地的Docker镜像的元数据，包括有json与layersize。其中json文件记录了相应Docker镜像的ID、依赖关系、创建时间和配置信息等。</span><br><span class="line">Layersize为Docker镜像的大小。</span><br><span class="line"></span><br><span class="line">####Dockerfile</span><br><span class="line"></span><br><span class="line">Dockerfile实在通过docker build命令构件自己的Docker镜像时需要使用到的定义文件。它允许用户使用基本的DSL语法来定义Docker镜像，每一条指令描述了构建镜像的步骤。</span><br><span class="line"></span><br><span class="line">## 3.Docker镜像的操作</span><br><span class="line"></span><br><span class="line">Docker registry是存储其镜像的仓库，用户可以通过Docker client与Docker registry进行通信，以此来完成镜像的搜索、下载和上传等相关操作。</span><br><span class="line">Docker Hub是提供镜像的共有与私有存储服务，它也是用户最主要的镜像来源。除了Docker Hub外，也可以自行搭建私有服务器来实现镜像仓库的功能。</span><br><span class="line"></span><br><span class="line">###3.1 镜像获取</span><br><span class="line"></span><br><span class="line">镜像是docker运行容器的前提。docker pull命令从网络上下载镜像</span><br><span class="line">命令格式为：</span><br><span class="line">&#96;# docker pull &#96;</span><br></pre></td></tr></table></figure>
+<p>用法：docker pull [OPTIONS] NAME[:TAG|@DIGEST]<br>选项：<br>-a, –all-tags   #下载存储库中的所有标记的镜像<br>–disable-content-trust  #跳过镜像验证（默认为true）<br>–help         #打印帮助</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">对Docker镜像来说，如果不现实制定TAG，则默认会选择latest标签，即下载仓库中最新版本的镜像。</span><br><span class="line"></span><br><span class="line">####获取默认最新的镜像：</span><br><span class="line"></span><br><span class="line">&#96;# docker pull ubuntu #下载最新版本的ubuntu镜像&#96;</span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307172127.png)</span><br><span class="line"></span><br><span class="line">*上图是从默认的注册服务器的ubuntu仓库下载标记为latest的镜像。*</span><br><span class="line"></span><br><span class="line">Downloading行首的字串代表各层的ID。下载过程中会获取并输出镜像的各层信息，层（Layer）其实是AUFS（一种联合文件系统）中的重要概念，是实现增量保存与更新的基础。</span><br><span class="line"></span><br><span class="line">####指定仓库下载镜像：</span><br><span class="line">&#96;# docker pull registry.docker-cn.com&#x2F;library&#x2F;ubuntu&#96;</span><br><span class="line"></span><br><span class="line">*可以从其他注册服务器的仓库下载，但是需要在仓库的名称前指定完整的仓库注册服务器地址。*</span><br><span class="line">##3.2 镜像的管理</span><br><span class="line">使用docker images命令可以列出本机上已有的镜像。</span><br><span class="line">&#96;#docker images --help&#96;</span><br></pre></td></tr></table></figure>
+<p>用法：docker images [OPTIONS] [REPOSITORY[:TAG]]<br>选项：<br>-a, –all   #显示所有的镜像，默认只列出最顶层的镜像<br>    –digests  #显示摘要<br>-f, –filter value   #根据提供的条件过滤输出（默认[]）<br>    –format string  #漂亮的打印镜像使用Go模板<br>    –help           #打印帮助<br>    –no-trunc      #不要截断输出<br>-q, –quiet        #只显示数字ID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#96;#docker images #列出主机上已有的镜像&#96;</span><br></pre></td></tr></table></figure>
+<p>[root@Immaple-Docker ~]# docker images -a<br>REPOSITORY                              TAG                 IMAGE ID            CREATED             SIZE<br>docker.io/ubuntu                        latest              47b19964fb50        4 weeks ago         88.1 MB<br>registry.docker-cn.com/library/ubuntu   latest              47b19964fb50        4 weeks ago         88.1 MB<br>[root@Immaple-Docker ~]# docker images<br>REPOSITORY                              TAG                 IMAGE ID            CREATED             SIZE<br>docker.io/ubuntu                        latest              47b19964fb50        4 weeks ago         88.1 MB<br>registry.docker-cn.com/library/ubuntu   latest              47b19964fb50        4 weeks ago         88.1 MB</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">* 第一列字段：REPOSITORY。是来自于哪个仓库，这里可以看出来都是来自于registry.docker-cn.com这个仓库。</span><br><span class="line">* 第二列字段：TAG。用来标记来自于同一个仓库的不同镜像。通过TAG信息来区分发行版本。也就是镜像的标签信息。</span><br><span class="line">* 第三列字段：IMAGE ID。这是一个唯一值，也就是镜像的唯一ID号。</span><br><span class="line">* 第四列字段：CREATED。这是镜像的创建时间。</span><br><span class="line">* 第五列字段：SIZE，这是镜像的大小。</span><br><span class="line"></span><br><span class="line">####给镜像打标签：</span><br><span class="line"></span><br><span class="line">&#96;# docker tag docker.io&#x2F;ubuntu testubuntu:16.04 #指定镜像然后给打上新的标签是testubuntu：16.04&#96;</span><br><span class="line"></span><br><span class="line">&#96;#docker images&#96;</span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307174435.png)</span><br><span class="line"></span><br><span class="line">*注意第一列和第二列不一样，后面全是一样的（如果ID是一个），这说明镜像还是原来的镜像，只是多了一个标签而已。也就是他们实际上指向了同一个镜像文件，只是别名不同而已。标签在这里起到了引用或快捷方式的作用。*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">####获取镜像的详细信息：</span><br><span class="line">docker inspect命令可以查看镜像和容器的详细信息，默认会列出全部信息。</span><br><span class="line"></span><br><span class="line">&#96;#docker inspect --help&#96;</span><br></pre></td></tr></table></figure>
+<p>用法：docker inspect [OPTIONS] CONTAINER|IMAGE|TASK [CONTAINER|IMAGE|TASK…]<br>-f, –format  #可以通过此参数指定输出的模板格式，以便输出特定信息。<br>-s, –size   #如果类型是容器，则显示总文件大小<br>–type       #回指定类型的JSON（例如镜像，容器或任务）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#96;# docker inspect 47b19964fb50 *#获取ID号镜像的详细信息&#96;</span><br></pre></td></tr></table></figure>
+<p>[<br>    {<br>        “Id”: “sha256:47b19964fb500f3158ae57f20d16d8784cc4af37c52c49d3b4f5bc5eede49541”,<br>        “RepoTags”: [<br>            “docker.io/ubuntu:latest”,<br>            “registry.docker-cn.com/library/ubuntu:latest”,<br>            “testubuntu:16.04”<br>        ],<br>        “RepoDigests”: [<br>            “docker.io/ubuntu@sha256:7a47ccc3bbe8a451b500d2b53104868b46d60ee8f5b35a24b41a86077c650210”,<br>            “registry.docker-cn.com/library/ubuntu@sha256:7a47ccc3bbe8a451b500d2b53104868b46d60ee8f5b35a24b41a86077c650210”<br>        ],<br>        “Parent”: “”,<br>        “Comment”: “”,<br>        “Created”: “2019-02-06T03:37:51.599085524Z”,<br>        “Container”: “4fcabd24a4d0668c251f05105af1d986b1841713e7af90bf51df172ecefae2fa”,<br>        “ContainerConfig”: {<br>            “Hostname”: “4fcabd24a4d0”,<br>            “Domainname”: “”,<br>            “User”: “”,<br>            “AttachStdin”: false,<br>            “AttachStdout”: false,<br>            “AttachStderr”: false,<br>            “Tty”: false,<br>            “OpenStdin”: false,<br>            “StdinOnce”: false,<br>            “Env”: [<br>                “PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin”<br>            ],<br>            “Cmd”: [<br>                “/bin/sh”,<br>                “-c”,<br>                “#(nop) “,<br>                “CMD [&quot;/bin/bash&quot;]”<br>            ],<br>            “ArgsEscaped”: true,<br>            “Image”: “sha256:5bbf4643e91ac20eb0ec60930e6d56e36eedab0ae09930a4bd414bb227590d28”,<br>            “Volumes”: null,<br>            “WorkingDir”: “”,<br>            “Entrypoint”: null,<br>            “OnBuild”: null,<br>            “Labels”: {}<br>        },<br>        “DockerVersion”: “18.06.1-ce”,<br>        “Author”: “”,<br>        “Config”: {<br>            “Hostname”: “”,<br>            “Domainname”: “”,<br>            “User”: “”,<br>            “AttachStdin”: false,<br>            “AttachStdout”: false,<br>            “AttachStderr”: false,<br>            “Tty”: false,<br>            “OpenStdin”: false,<br>            “StdinOnce”: false,<br>            “Env”: [<br>                “PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin”<br>            ],<br>            “Cmd”: [<br>                “/bin/bash”<br>            ],<br>            “ArgsEscaped”: true,<br>            “Image”: “sha256:5bbf4643e91ac20eb0ec60930e6d56e36eedab0ae09930a4bd414bb227590d28”,<br>            “Volumes”: null,<br>            “WorkingDir”: “”,<br>            “Entrypoint”: null,<br>            “OnBuild”: null,<br>            “Labels”: null<br>        },<br>        “Architecture”: “amd64”,<br>        “Os”: “linux”,<br>        “Size”: 88140808,<br>        “VirtualSize”: 88140808,<br>        “GraphDriver”: {<br>            “Name”: “overlay2”,<br>            “Data”: {<br>                “LowerDir”: “/var/lib/docker/overlay2/d2f2d5dd961f0c6bb15f391da7f83bac96aae8a6baad312268d9c013f485c561/diff:/var/lib/docker/overlay2/6ee748aa1cde0c009f692bab44306999c9593081bc748bd8596ca7e68a1505ad/diff:/var/lib/docker/overlay2/3e5d30a856145f7e8e1f822b360922d791d291a6745f446bf319176a7b8d2975/diff”,<br>                “MergedDir”: “/var/lib/docker/overlay2/1e26705343f29b9dea29cbc25f4f9b280caf826a07a1793775c49534486565e6/merged”,<br>                “UpperDir”: “/var/lib/docker/overlay2/1e26705343f29b9dea29cbc25f4f9b280caf826a07a1793775c49534486565e6/diff”,<br>                “WorkDir”: “/var/lib/docker/<br>                …………………………………</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">上面的JSON输出信息内容较多，只粘贴了部分内容。</span><br><span class="line"></span><br><span class="line">&#96;# docker inspect -f &#123;&#123;&quot;.Architecture&quot;&#125;&#125;  47b19964fb50  #可以指定&#123;&#123;&quot;.key&quot;&#125;&#125;的形式只显示指定的值&#96;</span><br><span class="line"></span><br><span class="line">&#96;# docker inspect -f &#123;&#123;&quot;.Architecture&quot;&#125;&#125;  47b1   #当然也可以只截取ID的前一部分。&#96;</span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307183959.png)</span><br><span class="line"></span><br><span class="line">####搜索镜像：</span><br><span class="line">使用docker search命令可以搜索远端仓库中共享的镜像。默认搜索Docker Hub官方仓库中的镜像。</span><br><span class="line">&#96;#docker search --help&#96;</span><br></pre></td></tr></table></figure>
+<p>用法：docker search [OPTIONS] TERM<br>选项：<br>-f, –filter value    #根据提供的条件过滤输出（默认[]）<br>–limit int          #搜索结果的最大数目（默认为25）<br>–no-index         #不要截断输出<br>–no-trunc         #不要截断输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#96;#docker search mysql #搜索带有mysql关键字的镜像&#96;</span><br><span class="line"></span><br><span class="line">&#96;#docker search mysql --filter&#x3D;stars&#x3D;5 #仅显示评价为5星以上的镜像&#96;</span><br><span class="line"></span><br><span class="line">####删除镜像：</span><br><span class="line">使用镜像的标签删除镜像，使用docker rmi命令可以删除镜像。</span><br><span class="line"></span><br><span class="line">&#96;#docker rmi testubuntu：16.04&#96;</span><br></pre></td></tr></table></figure>
+<p>[root@Immaple-Docker ~]# docker rmi testubuntu:16.04<br>Untagged: testubuntu:16.04<br>Untagged: docker.io/ubuntu@sha256:7a47ccc3bbe8a451b500d2b53104868b46d60ee8f5b35a24b41a86077c650210<br>Untagged: registry.docker-cn.com/library/ubuntu@sha256:7a47ccc3bbe8a451b500d2b53104868b46d60ee8f5b35a24b41a86077c650210</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307184625.png)</span><br><span class="line"></span><br><span class="line">同一个镜像拥有多个标签的时候，这个操作对本地的镜像不会有影响，docker rmi命令只是删除那个标签而已，_但是当剩余一个标签的时候，再执行就是删除该镜像了。_</span><br><span class="line"></span><br><span class="line">需要注意的是，使用rmi命令删除镜像时，如果已经有基于该镜像启动的容器在，则无法直接删除，需要首先删除容器。如果加上-f, --force参数的话，就是强制删除存在容器的镜像。</span><br><span class="line"></span><br><span class="line">##3.3 创建镜像：</span><br><span class="line"></span><br><span class="line">创建镜像的方法有三种：</span><br><span class="line">* 基于已有镜像的容器创建；</span><br><span class="line">* 基于本地模板导入；</span><br><span class="line">* 基于Dockerfile创建；</span><br><span class="line"></span><br><span class="line">####基于已有镜像的容器创建（篇幅有限，本篇仅记录这种方式）：</span><br><span class="line"></span><br><span class="line">commit命令可以将一个容器固化为一个新的镜像。当需要制作特定的镜像时，会进行修改容器的配置，如在容器中安装特定工具等。</span><br><span class="line">通过commit命令可以将这些修改保存起来，使其不会因为容器的停止而丢失。</span><br><span class="line"></span><br><span class="line">&#96;#docker commit --help &#96;</span><br></pre></td></tr></table></figure>
+<p>用法：docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]<br>选项：<br>-a, –author string   #作者的信息，（例如“John Hannibal Smith <a href="mailto:&#104;&#97;&#110;&#110;&#105;&#x62;&#x61;&#108;&#x40;&#x61;&#45;&#x74;&#101;&#97;&#109;&#x2e;&#99;&#111;&#109;">&#104;&#97;&#110;&#110;&#105;&#x62;&#x61;&#108;&#x40;&#x61;&#45;&#x74;&#101;&#97;&#109;&#x2e;&#99;&#111;&#109;</a>”）<br>-c, –change value    #将Dockerfile指令应用于创建的映像（默认[]）<br>-m, –message string  #提交信息<br>-p, –pause           #在提交期间暂停容器（默认为true）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">提交保存时，只能选用正在运行的容器（既可以通过docker ps查看到的容器）来制作新的镜像。</span><br><span class="line">在指定特定镜像时，直接使用commit命令只是一个临时性的辅助命令，不推荐使用。</span><br><span class="line">官网建议通过docker build命令结合Dockerfile创建和管理镜像。</span><br><span class="line"></span><br><span class="line">&#96;#docker run ubuntu echo ‘hello! i am maple!&#39;&#96;</span><br><span class="line">&#96;#docker ps -a &#96;</span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307190748.png)</span><br><span class="line">可以看到我们的新启动的容器已经在运行了，id为：a8546bb122dd</span><br><span class="line"></span><br><span class="line">&#96;# docker commit -m &quot;Added a new file&quot; -a &quot;immaple dockertest1&quot; a8546bb122dd test &#96;</span><br><span class="line">根据容器的ID提交一个新的镜像，镜像名称为test</span><br><span class="line">&#96;sha256:6cff9f878d37207ec3f7a70fb82ad5c13903873785ba4f1cefe2fe40736a9d5d&#96;</span><br><span class="line"></span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307191137.png)</span><br><span class="line"></span><br><span class="line">上面的信息是提交成功之后的显示内容</span><br><span class="line"></span><br><span class="line">&#96;# docker images #查看一下现有的镜像&#96;</span><br><span class="line">![](https:&#x2F;&#x2F;photo.iammaple.com&#x2F;20190307191328.png)</span><br><span class="line">可以看到新的镜像已经产生了。</span><br><span class="line"></span><br><span class="line">####build构建镜像：</span><br><span class="line"> 一般用户要使用docker build命令和Dockerfile来完成一个新镜像的构建，这里先介绍docker build命令。</span><br><span class="line"> # docker build --help</span><br></pre></td></tr></table></figure>
+<p>用法：Usage:  docker build [OPTIONS] PATH | URL | -<br>选项：<br>    –build-arg value   #设置构建时间变量（默认[]）<br>    –cgroup-parent string   #容器的可选父cgroup<br>    –cpu-period int       #限制CPU CFS（完全公平调度程序）周期<br>    –cpu-quota int      #限制CPU CFS（完全公平调度程序）配额<br>-c, –cpu-shares int      #CPU份额（相对权重）<br>    –cpuset-cpus string  #在其中允许执行的CPU（0-3,0,1）<br>    –cpuset-mems string  #允许执行的MEM（0-3,0,1）<br>    –disable-content-trust   #跳过镜像验证（默认为true）<br> -f, –file string     #Dockerfile的名称（默认是’PATH/Dockerfile’）<br>     –force-rm       #始终删除中间容器<br>     –help     #打印用法<br>     –isolation string   #容器隔离技术<br>     –label value   #设置镜像的元数据（默认[]）<br> -m, –memory string      #内存限制<br>     –memory-swap string  #交换限制等于内存加交换：’-1’以启用无限交换<br>     –network string     #将容器连接到网络（默认“默认”）<br>     –no-cache     #构建镜像时不要使用缓存<br>     –pull  #始终尝试拉取图像的较新版本<br> -q, –quiet     #取消构建输出并成功打印镜像ID<br>     –rm     #成功构建后移除中间容器（默认为true）<br>     –shm-size string   #/dev/shm的大小，默认值是64MB<br> -t, –tag value     #以“名称：标记”格式命名（可选）标记（默认为[]）<br>     –ulimit value   #Ulimit选项（默认[]）<br> -v, –volume value     #设置构建时绑定挂载（默认[]）</p>
+<pre><code>先记录命令介绍，下来还得再单开一片记录镜像的构建。
+
+###3.4 存储和导入镜像
+可以使用docker save 和docker load命令来存储和载入镜像。
+
+`#docker save -o /opt/ubuntu_latest.tar docker.io/ubuntu:latest #将镜像存储在本地的/opt目录下名称为ubuntu_latest.tar`
+`# ls -lh /opt/ubuntu_latest.tar`
+
+![](https://photo.iammaple.com/20190307193319.png)
+
+`# docker load -i /opt/ubuntu_latest.tar #载入镜像， -i --input后面跟要载入的镜像tar包`
+`#docker load &lt;/opt/ubuntu_latest.tar&gt; #这种方式也是可以的。`
+![](https://photo.iammaple.com/20190307193513.png)
+
+####提一下上传镜像：
+可以使用docker push 命令上传到仓库，默认上传到DockerHub官方仓库（需要登录），命令格式为docker push NAME[:TAG]。用户在DockerHub网站注册后，即可上传自制的镜像。
+
+`#docker tag. test:latest user/test:latest #先添加新的标签`
+
+`#docker push user/test:latest`
+
+###3.5 Docker Hub
+目前Docker官方维护了一个公有仓库https://hub.docker.com，其中已包含上万个镜像，大部分需求都可以通过在DockerHub中直接下载镜像来实现。
+
+仓库是集中存放镜像的地方，一个容易与之混淆的概念是注册服务器(Registry)。实际上注册服务器是存放仓库的具体服务器，每个服务器上可以有多个仓库，而每个仓库下面有多个镜像。从这方面来说仓库可以被认为是一个具体的项目或目录。
+仓库又分公有仓库和私有仓库，这个在上面已经不止一次的被提起。
+
+####登陆Docker Hub账户：
+
+用户通过拥有一个Docker Hub账户，用以提交和推送自己的镜像。当用户在未登陆的状态下输入docker login命令，Docker client端将提示用户一次输入Username、Password和Email，并存放到用户希望登陆的registry对应的配置文件中。若用户处于已登陆状态且没有尝试以新用户身份重新登录，则根据配置文件中的既有信息来获取用户信息。其后，Docker client向Docker server 发送“post／auth”的HTTP请求，进行权限认证。Docker server接受到相应的HTTP请求后，根据URL以及请求方法来确定需要执行的方法，认证的方法为PostAuth。
+
+在postAuth这个方法执行的过程中，根据HTTP请求中的配置信息，由daemon实例调用Auth函数来进行认证工作。并将函数返回状态（即认证是否通过）写入HTTP应答。
+*Auth函数代码实现包括如下几个关键步骤：
+* 1、根据config中的registry address，得到有效的index配置信息。
+* 2、由返回的index配置信息解析获得一个registry endpoint。
+* 3、重制config中的registry address为上一步返回的endpoint。
+* 4、执行login函数登陆该registry endpoint。
+
+上述Login函数真正负责进行用户登陆的实现过程。它会根据Docker registry的版本分别执行Login V2和Login V1。
+
+####基本操作：
+
+ 无需登录就可以进行：docker search 和docker pull操作
+
+  根据是否为官方提供，可将这些镜像资源分为两类。一种是类似于centos这样的基础镜像，称为基础或根镜像。这些镜像是由docker公司创建、验证、支持、提供。这样的镜像往往使用单个单词作为名字。还有一种类型，比如tianon/centos镜像，它是由DockerHub的用户tianon创建并维护的，带有用户名称为前缀，表明是某用户的某仓库。可以通过用户名称前缀user_name/来指定使用某个用户提供的镜像.
+  `# docker search centos --filter=stars=50    #显示评价为50星以上的镜像`
+
+  *#用户可以再登录的情况下通过docker push命令将本地的镜像推送到Docker Hub。*
+
+####自动创建：
+ 自动创建功能对于需要经常升级镜像内程序来说十分方便，自动创建功能使得用户通过Docker Hub指定跟踪一个目标网站（目前支持GitHub或BitBucket）上的项目，一旦项目发现新的提交，则会自动执行创建。要配置自动创建，包括如下的步骤：
+* 1）.创建并登录Docker Hub,以及目标网站；*在目标网站中连接账户到Docker Hub。
+* 2）.在Docker Hub中配置一个自动创建。
+* 3）.选取一个目标网站中的项目（需要含Dockerfile）和分支
+* 4）.指定Dockerfile的位置，并提交创建。
+* 之后可以再Docker Hub的“自动创建”页面跟踪每次创建的状态。
+
+####Pull镜像：
+Docker的server端收到用户发起的pull请求后，需要做的主要工作如下：
+
+* 1.根据用户命令行参数解析出其希望拉取的repository信息
+
+* 2.通过TagStore设置锁，保证Docker daemon在一个时刻对一个repository只能进行一个拉取操作；拉取镜像完毕之后该锁释放。
+
+* 3.获取endpoint信息，并向该endpoint指定的registry发起会话
+
+* 4.如果待拉取repository为official版本或者endpoint的API版本为V2,同时用户没有配置Docker-Mirrors,Docker就直接向V2 registry拉取镜像。（如果向V2 registry拉取镜像失败，则尝试从V1 registry拉取。）
+
+* 5.获取V2 registry的endpoint。
+
+* 6.由endpoint和待拉取镜像名称获取拉取指定镜像的认证信息。
+
+* 7.如果tag值为空，即没有指定标签，则获取V2 registry中repository的tag list，然后对于tag list中的每一个标签，都执行一次pullV2Tag方法。该方法的功能分为两大部分，一是验证用户请求，二是当且仅当某一层不在本地时进行拉取这一层文件到本地。如果tag值不为空，则只对指定标签的镜像进行上述工作。
+
+
+####Commit镜像：
+ docker commit命令只提交容器镜像发生变更了的部分，即修改后的容器镜像与当前仓库中对应镜像之间的差异部分，这使得该操作实际需要提交的文件往往并不多。Docker server接收到对应的HTTP请求后，需要执行下面的步骤：
+
+* 1.根据用户输入pause函数的设置确定是否暂停该Docker容器的运行。
+
+* 2.寻找该容器文件系统再graphdriver上的路径。
+
+* 3.返回该容器与其父镜像的差异并将这部分文件和目录打成压缩包，即待commit容器的可读写层的差异（diff）。
+
+* 4.graphdriver根据返回的差异创建一个新的镜像，记录其元数据。
+
+* 5.将上述镜像文件及目录上传至repository。
+
+####Build构建镜像：
+  Docker client端通过Dockerfile完成相关信息的设置之后，Docker client向Docker server发送“POST/build”的HTTP请求，包含了所需的context信息（文件或目录）。
+
+Docker server端接受到相应的HTTP请求后，需要做的工作如下：
+
+* 1.创建一个临时目录。并将context制定的文件系统解压到该目录下。
+
+* 2.读取并解析Dockerfile
+
+* 3.根据解析出的DOckerfile遍历其中的所有指令，并分发到不同的模块去执行。Dockerfile每条指令的格式均为INSTRUCION arguments，INSTRUCION是一些特定的关键词，包括FROM、RUN、USER等，都会映射到不同的parser进行处理。
+
+* 4.parser为上述每一个指令创建一个对应的临时容器，然后通过commit使用此容器生成一层镜像。
+
+* 5.Dockerfile中偶的指令对应的层的集合，就是此次build后的结果。其中最后一次commit生成的层镜像ID就会作为最终的镜像ID返回。
+
+####Push镜像：
+  当用户制作了自己的镜像后，希望将它上传至仓库，此时可以通过docker push命令完成该操作。而在Docker server接收到用户的push请求后的关键步骤如下：
+
+1. 解析出repository信息，通过TagStore设置锁。
+
+2. 通过ping操作检查指定的registry是否可用，返回一个registry endpoint，然后发起同registry的会话.
+
+3. 如果推送的镜像为Official镜像或者endpoint对应版本为V2 registry，则调用pushV2 Repository方法。这个方法会首先验证用户指定标签的镜像在本地是否存在，以及被推repository的访问权限。接下来，对于不同标签的待推送镜像，该方法会从顶向下逐个检验layer其checksum，标记被推送repository中不存在的layer和更改过的读写层内容。将这些标记后的镜像内容上传完毕后，再讲一份描述文件manifest上传到repository。
+
+4. 如果镜像不属于上述情况，则Docker会调用push Repository方法来推送镜像到V1 registry，并根据待推送的repository和tag信息保证当且仅当某layer在endpoint上不存在时，才上传该layer。
+
+
+
+
+
+
+
+##### 注1
+&gt; Linux内核提供了cgroups控制组(controlgroups)的功能，最初由google的工程师提出，后来被整合进Linux内核。Cgroups也是LXC（LinuxContainer容器是一种内核虚拟化技术，可以提供轻量级的虚拟化，以便隔离进程和资源，而且不需要提供指令解释机制以及全虚拟化的其他复杂性）为实现虚拟化所使用的资源管理手段。
+
+&gt; 默认cgroups配置文件在/etc/cgconfig.conf中，具体的挂载目录请参见配置文件。
+
+&gt; 重新启动：/etc/init.d/cgconfigrestart
+
+&gt; 安装包：yuminstall libcgroup libcgroup-tools
+
+###### 注2
+&gt; 在Linux系统中，可以同时存在多用户多进程，那么对他们的运行协调管理，通过进程调度和进度管理可以解决，但是，整体资源是有限的，怎么把有限的资源（进程号、通信资源、网络资源等等）合理分配给各个用户所在的进程？Linux中提出了namespace机制，这是一种轻量级的虚拟化形式。再次之前，Linux中很多资源是全局管理的，例如，系统中所有进程，都是通过PID来标识的，就像每个学生的学号一样，在整个学校范围内，肯定是唯一标识这个学生的。用户的ID管理，各个用户通过全局为UID来标识，每个学校的校长也只有有一个，它的UID为0，权利最大，可以对学校内全部老师和学生发起命令。每个学生可以看到其他学生的活动，但是无权把他们赶出学校，这是可以理解的。这种集中统一的管理方式，很适合大规模人群的管理。
+
+&gt; 随着大数据、虚拟化的兴起，Linux为了提供更加精细的资源分配管理机制，给出了namespace机制解决方法。
+
+</code></pre>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Maple Yu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://unxlab.com/2019/12/25/%E4%BA%8C%E3%80%81Docker%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E9%83%A8%E7%BD%B2/" title="二、Docker安装与简单部署">http://unxlab.com/2019/12/25/二、Docker安装与简单部署/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/25/Docker%E4%B8%8E%E9%95%9C%E5%83%8F%E4%BB%8B%E7%BB%8D/" rel="prev" title="Docker与镜像介绍">
+      <i class="fa fa-chevron-left"></i> Docker与镜像介绍
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Docker安装与简单部署"><span class="nav-number">1.</span> <span class="nav-text">二、Docker安装与简单部署</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Maple Yu"
+      src="https://photo.iammaple.com/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Maple Yu</p>
+  <div class="site-description" itemprop="description">忙碌的闲人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:maple_yu@126.com" title="E-Mail → mailto:maple_yu@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i>Google</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+  <div class="beian"><a href="http://www.beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备18001342号 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Maple Yu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
