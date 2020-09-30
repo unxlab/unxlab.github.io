@@ -145,12 +145,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">2</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">5</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -185,10 +185,154 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2020/01/02/docker1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://photo.iammaple.com/unxlab.png">
+      <meta itemprop="name" content="Maple Yu">
+      <meta itemprop="description" content="UNX实验室">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UNXLAB">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/02/docker1/" class="post-title-link" itemprop="url">一、Docker与镜像介绍</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-01-02 22:17:10 / 修改时间：22:23:10" itemprop="dateCreated datePublished" datetime="2020-01-02T22:17:10+08:00">2020-01-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Docker-镜像"><a href="#Docker-镜像" class="headerlink" title="Docker?镜像?"></a>Docker?镜像?</h1><p>什么是Docker？<br>什么是Docker镜像？<br>让我们来了解一下吧。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/02/docker1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2020/01/02/open/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://photo.iammaple.com/unxlab.png">
+      <meta itemprop="name" content="Maple Yu">
+      <meta itemprop="description" content="UNX实验室">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="UNXLAB">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/02/open/" class="post-title-link" itemprop="url">Linux磁盘扩容使用resize2fs命令报错详解</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-01-02 21:57:35 / 修改时间：22:31:08" itemprop="dateCreated datePublished" datetime="2020-01-02T21:57:35+08:00">2020-01-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="resize2fs命令报错？"><a href="#resize2fs命令报错？" class="headerlink" title="resize2fs命令报错？"></a>resize2fs命令报错？</h1><p>Bad magic number in super-block while trying to open</p>
+<p>以上报错是在给Linux虚拟机进行扩容时进行最后一步操作碰到的一个问题，当时以为哪个步骤做的不对，但是后来发现原来只是对不同的格式要使用不同的命令。<br>由于CentOS 6 和 CentOS 7 在默认根文件系统的文件系统格式存在差异，需要判断是否为xfs，如果是xfs则应该使用xfs_growfs而不是简单的使用resize2fs就可以。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/02/open/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/12/29/%E5%AE%89%E8%A3%85Zabbix%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://photo.iammaple.com/WeChat67d135d1a92df29fc4f5a02a2c793e7b.png">
+      <meta itemprop="image" content="https://photo.iammaple.com/unxlab.png">
       <meta itemprop="name" content="Maple Yu">
       <meta itemprop="description" content="UNX实验室">
     </span>
@@ -208,10 +352,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-12-29 20:11:45 / 修改时间：20:12:30" itemprop="dateCreated datePublished" datetime="2019-12-29T20:11:45+08:00">2019-12-29</time>
+              <time title="创建时间：2019-12-29 20:11:45" itemprop="dateCreated datePublished" datetime="2019-12-29T20:11:45+08:00">2019-12-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-02 22:13:55" itemprop="dateModified" datetime="2020-01-02T22:13:55+08:00">2020-01-02</time>
+              </span>
 
           
 
@@ -224,7 +374,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>CentOS 7 安装 ZABBIX监控服务器<br><img src="https://photo.iammaple.com/zabbix.jpg" alt="mark"><br>zabbix（音同 zæbix）是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。<br>zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位/解决存在的各种问题。</p>
+          <p>zabbix（音同 zæbix）是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。<br>zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位/解决存在的各种问题。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/12/29/%E5%AE%89%E8%A3%85Zabbix%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1%E5%99%A8/#more" rel="contents">
@@ -254,7 +404,7 @@
     <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/12/25/%E4%BA%8C%E3%80%81Docker%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E9%83%A8%E7%BD%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://photo.iammaple.com/WeChat67d135d1a92df29fc4f5a02a2c793e7b.png">
+      <meta itemprop="image" content="https://photo.iammaple.com/unxlab.png">
       <meta itemprop="name" content="Maple Yu">
       <meta itemprop="description" content="UNX实验室">
     </span>
@@ -328,87 +478,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/12/25/Docker%E4%B8%8E%E9%95%9C%E5%83%8F%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://photo.iammaple.com/WeChat67d135d1a92df29fc4f5a02a2c793e7b.png">
-      <meta itemprop="name" content="Maple Yu">
-      <meta itemprop="description" content="UNX实验室">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="UNXLAB">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/25/Docker%E4%B8%8E%E9%95%9C%E5%83%8F%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">Docker与镜像介绍</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2019-12-25 11:52:50 / 修改时间：12:01:04" itemprop="dateCreated datePublished" datetime="2019-12-25T11:52:50+08:00">2019-12-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="一、Docker与镜像介绍"><a href="#一、Docker与镜像介绍" class="headerlink" title="一、Docker与镜像介绍"></a>一、Docker与镜像介绍</h3><h2 id="1-1-云计算平台介绍"><a href="#1-1-云计算平台介绍" class="headerlink" title="1.1 云计算平台介绍"></a>1.1 云计算平台介绍</h2><p>云计算是一种资源的服务模式，该模式可以实现随时随地、便捷按需地从可配置计算资源共享池中获取所需的资源（网络、服务器、存储、应用及服务），资源能够快速供应并释放，显著的减少了资源管理的工作开销。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/12/25/Docker%E4%B8%8E%E9%95%9C%E5%83%8F%E4%BB%8B%E7%BB%8D/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/12/24/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://photo.iammaple.com/WeChat67d135d1a92df29fc4f5a02a2c793e7b.png">
+      <meta itemprop="image" content="https://photo.iammaple.com/unxlab.png">
       <meta itemprop="name" content="Maple Yu">
       <meta itemprop="description" content="UNX实验室">
     </span>
@@ -477,7 +550,7 @@
     <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://photo.iammaple.com/WeChat67d135d1a92df29fc4f5a02a2c793e7b.png">
+      <meta itemprop="image" content="https://photo.iammaple.com/unxlab.png">
       <meta itemprop="name" content="Maple Yu">
       <meta itemprop="description" content="UNX实验室">
     </span>
@@ -606,7 +679,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Maple Yu"
-      src="https://photo.iammaple.com/WeChat67d135d1a92df29fc4f5a02a2c793e7b.png">
+      src="https://photo.iammaple.com/unxlab.png">
   <p class="site-author-name" itemprop="name">Maple Yu</p>
   <div class="site-description" itemprop="description">UNX实验室</div>
 </div>
@@ -615,14 +688,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -670,7 +743,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

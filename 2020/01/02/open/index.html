@@ -46,20 +46,20 @@
   };
 </script>
 
-  <meta name="description" content="CentOS搭建GitLab服务器 Centos 7搭建Gitlab服务器###GitLab简介：  GitLab 是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的web服务。安装方法是参考GitLab在GitHub上的Wiki页面。GitLab是由GitLabInc.开发，使用MIT许可证的基于网络的Git仓库管理工具，且具有wiki和issue跟踪功能。使用">
+  <meta name="description" content="resize2fs命令报错？Bad magic number in super-block while trying to open 以上报错是在给Linux虚拟机进行扩容时进行最后一步操作碰到的一个问题，当时以为哪个步骤做的不对，但是后来发现原来只是对不同的格式要使用不同的命令。由于CentOS 6 和 CentOS 7 在默认根文件系统的文件系统格式存在差异，需要判断是否为xfs，如果是xfs">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos 7搭建Gitlab服务器">
-<meta property="og:url" content="http://unxlab.com/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
+<meta property="og:title" content="Linux磁盘扩容使用resize2fs命令报错详解">
+<meta property="og:url" content="http://unxlab.com/2020/01/02/open/index.html">
 <meta property="og:site_name" content="UNXLAB">
-<meta property="og:description" content="CentOS搭建GitLab服务器 Centos 7搭建Gitlab服务器###GitLab简介：  GitLab 是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的web服务。安装方法是参考GitLab在GitHub上的Wiki页面。GitLab是由GitLabInc.开发，使用MIT许可证的基于网络的Git仓库管理工具，且具有wiki和issue跟踪功能。使用">
+<meta property="og:description" content="resize2fs命令报错？Bad magic number in super-block while trying to open 以上报错是在给Linux虚拟机进行扩容时进行最后一步操作碰到的一个问题，当时以为哪个步骤做的不对，但是后来发现原来只是对不同的格式要使用不同的命令。由于CentOS 6 和 CentOS 7 在默认根文件系统的文件系统格式存在差异，需要判断是否为xfs，如果是xfs">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-03-08T12:18:44.000Z">
-<meta property="article:modified_time" content="2019-12-24T13:42:24.000Z">
+<meta property="article:published_time" content="2020-01-02T13:57:35.000Z">
+<meta property="article:modified_time" content="2020-01-02T14:31:08.584Z">
 <meta property="article:author" content="Maple Yu">
-<meta property="article:tag" content="technology，OPS">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://unxlab.com/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+<link rel="canonical" href="http://unxlab.com/2020/01/02/open/">
 
 
 <script id="page-configurations">
@@ -71,7 +71,7 @@
   };
 </script>
 
-  <title>Centos 7搭建Gitlab服务器 | UNXLAB</title>
+  <title>Linux磁盘扩容使用resize2fs命令报错详解 | UNXLAB</title>
   
 
 
@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://unxlab.com/2020/01/02/open/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://photo.iammaple.com/unxlab.png">
@@ -200,7 +200,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Centos 7搭建Gitlab服务器
+          Linux磁盘扩容使用resize2fs命令报错详解
         </h1>
 
         <div class="post-meta">
@@ -209,16 +209,21 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-03-08 20:18:44" itemprop="dateCreated datePublished" datetime="2019-03-08T20:18:44+08:00">2019-03-08</time>
+              <time title="创建时间：2020-01-02 21:57:35 / 修改时间：22:31:08" itemprop="dateCreated datePublished" datetime="2020-01-02T21:57:35+08:00">2020-01-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-24 21:42:24" itemprop="dateModified" datetime="2019-12-24T21:42:24+08:00">2019-12-24</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -238,41 +243,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>CentOS搭建GitLab服务器</p>
-<h1 id="Centos-7搭建Gitlab服务器"><a href="#Centos-7搭建Gitlab服务器" class="headerlink" title="Centos 7搭建Gitlab服务器"></a>Centos 7搭建Gitlab服务器</h1><p>###GitLab简介：</p>
-<blockquote>
-<p>GitLab 是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的web服务。安装方法是参考GitLab在GitHub上的Wiki页面。<br>GitLab是由GitLabInc.开发，使用MIT许可证的基于网络的Git仓库管理工具，且具有wiki和issue跟踪功能。使用Git作为代码管理工具，并在此基础上搭建起来的web服务。<br>由乌克兰程序员DmitriyZaporozhets和ValerySizov开发，它由Ruby写成。后来，一些部分用Go语言重写。截止2018年5月，该公司约有290名团队成员，以及2000多名开源贡献者。GitLab被IBM，Sony，JülichResearchCenter，NASA，Alibaba，Invincea，O’ReillyMedia，Leibniz-Rechenzentrum(LRZ)，CERN，SpaceX等组织使用。</p>
-</blockquote>
+        <h1 id="resize2fs命令报错？"><a href="#resize2fs命令报错？" class="headerlink" title="resize2fs命令报错？"></a>resize2fs命令报错？</h1><p>Bad magic number in super-block while trying to open</p>
+<p>以上报错是在给Linux虚拟机进行扩容时进行最后一步操作碰到的一个问题，当时以为哪个步骤做的不对，但是后来发现原来只是对不同的格式要使用不同的命令。<br>由于CentOS 6 和 CentOS 7 在默认根文件系统的文件系统格式存在差异，需要判断是否为xfs，如果是xfs则应该使用xfs_growfs而不是简单的使用resize2fs就可以。</p>
 <a id="more"></a>
-<p>###Why GitLab？</p>
-<p>提供Git项目仓库托管服务的是业界闻名的GitHub，但你要将代码上传到GitHub上，而且将项目设为私有是需要收费的。而GitLab则是开源免费的（社区版免费，企业版需订阅）。同样是采用Ruby on Rails开发，可以让你在自己的内网搭建一个“高仿”版的GitHub。企业的代码管理使用GitLab还是非常诱人的。<br>所以本章就GitLab的搭建开一篇，因为同类型的文章网络上数不胜数，造个轮再让自己加深印象也是可以的。</p>
-<p>GitLab的GitHub地址<br><a href="https://github.com/gitlabhq/gitlabhq" target="_blank" rel="noopener">https://github.com/gitlabhq/gitlabhq</a></p>
-<p>###安装前提：<br>GitLab支持在多系统下进行部署：</p>
-<ul>
-<li>Ubuntu</li>
-<li>Debian</li>
-<li>CentOS</li>
-<li>openSUSE</li>
-<li>Red Hat Enterprise Linux (please use the CentOS packages and instructions)</li>
-<li>Scientific Linux (please use the CentOS packages and instructions)</li>
-<li>Oracle Linux (please use the CentOS packages and instructions)</li>
-<li>#####但是不支持以下系统部署GitLab：</li>
-</ul>
-<p><strong>Non-Unix operating systems such as Windows</strong><br>可以看到官方是不支持将来也不会考虑支持的安装平台就是Windows了，如果只有windows，那么可以考虑搞个虚拟机来安装Linux支持版本，再使用GitLab，挺任性。</p>
-<p>#####硬件需求：<br>######CPU：<br>官方建议双核cpu，最多支持500用户。1个核心只支持100用户，同时也会导致程序运行缓慢，这个就按照官方建议来操作。</p>
-<p>######内存：<br>8G，最多支持100个用户。同样按照官方建议来进行配置，因为4G的内存可能会导致配置期间发生<strong>奇怪</strong>的错误，有兴趣的可以研究一下。本章节选择8G内存来进行部署。</p>
-<p>######交换空间（Swap）：<br>至少2G。官方文档提示即使有足够的可用内存，但是足够的交换空间可以在你的内存发生改变时减少发生错误的可能性。</p>
-<p>######存储：<br>够用就行，本章使用的存储为400G，应该足以使用。</p>
-<p>######数据库：<br>PostgreSQL，（version 9.6）这是官方强烈推荐的数据库首选，非常不推荐的是MySQL/MariaDB，因为大部分的GitLab功能在这个数据库上不支持。同时还建议正在使用Mysql／MariaDB的用户尽快迁移到PostgreSQL。</p>
-<p>####部署环境：<br>本次GitLab要部署在CentOS 7上。发行版本是CentOS Linux release 7.6.1810 (Core)<br>内存8G<br>交换空间8G<br>存储空间400G<br>数据库PostgreSQL</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@Immaple-GitLab ~]# cat &#x2F;etc&#x2F;redhat-release</span><br><span class="line">CentOS Linux release 7.6.1810 (Core)</span><br><span class="line">[root@Immaple-GitLab ~]# free -m</span><br><span class="line">              total        used        free      shared  buff&#x2F;cache   available</span><br><span class="line">Mem:           7868         889        6329          19         649        6653</span><br><span class="line">Swap:          7935           0        7935</span><br><span class="line">[root@Immaple-GitLab ~]# df -lh</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">&#x2F;dev&#x2F;mapper&#x2F;centos-root   50G  3.8G   47G   8% &#x2F;</span><br><span class="line">devtmpfs                 3.9G     0  3.9G   0% &#x2F;dev</span><br><span class="line">tmpfs                    3.9G  4.0K  3.9G   1% &#x2F;dev&#x2F;shm</span><br><span class="line">tmpfs                    3.9G   13M  3.9G   1% &#x2F;run</span><br><span class="line">tmpfs                    3.9G     0  3.9G   0% &#x2F;sys&#x2F;fs&#x2F;cgroup</span><br><span class="line">&#x2F;dev&#x2F;sda1               1014M  205M  810M  21% &#x2F;boot</span><br><span class="line">&#x2F;dev&#x2F;mapper&#x2F;centos-home  342G   33M  342G   1% &#x2F;home</span><br><span class="line">tmpfs                    787M  4.0K  787M   1% &#x2F;run&#x2F;user&#x2F;42</span><br><span class="line">tmpfs                    787M   32K  787M   1% &#x2F;run&#x2F;user&#x2F;0</span><br><span class="line">[root@Immaple-GitLab ~]#</span><br></pre></td></tr></table></figure>
-<p>以上是准备好的安装环境，基本符合GitLab官方推荐需求了。</p>
-<p>###1.安装部署：<br>GitLab提供了两种方式来安装，一种是使用官方打包好的文件，这种方法很简单。也不容易出错；<br>另一种就是手动安装，把代码下载下来，然后安装各种环境，数据库，编译环境等。<br>一步步安装起来，虽然比较麻烦，但是可以安装各种分支版本。比如<a href="https://gitlab.com/larryli/gitlab/tree/7-4-zh" target="_blank" rel="noopener">中文翻译版。</a></p>
-<p>先按照官方推荐版本来进行安装。</p>
-<p>####1.1安装并配置必要的依赖项目</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y curl policycoreutils-python openssh-server</span><br><span class="line">sudo systemctl enable sshd</span><br><span class="line">sudo systemctl start sshd</span><br><span class="line">sudo firewall-cmd --permanent --add-service&#x3D;http</span><br><span class="line">sudo systemctl reload firewalld</span><br></pre></td></tr></table></figure>
-<p>因为我是root用户，就免了<strong>sudo</strong>。这里犯懒，直接copy了官方的命令来。</p>
-<p>安装Postfix以发送电邮通知，如果要通过其他解决方案的话，可以跳过这个步骤。</p>
+
+<p>业务增长，服务器上的root空间不足以使用，used已经100%，需要扩容，但是扩容到最后一步报错：resize2fs: Bad magic number in super-block while trying to open<br>查了一下，xfs格式的不能用resize2fs命令来执行。</p>
+<h3 id="扩容前容量使用率："><a href="#扩容前容量使用率：" class="headerlink" title="扩容前容量使用率："></a>扩容前容量使用率：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# df</span><br><span class="line">Filesystem              1K-blocks     Used Available Use% Mounted on</span><br><span class="line">&#x2F;dev&#x2F;mapper&#x2F;centos-root  17811456 17810252      1204 100% &#x2F;</span><br><span class="line">devtmpfs                  4061664        0   4061664   0% &#x2F;dev</span><br><span class="line">tmpfs                     4078600        4   4078596   1% &#x2F;dev&#x2F;shm</span><br><span class="line">tmpfs                     4078600    12532   4066068   1% &#x2F;run</span><br><span class="line">tmpfs                     4078600        0   4078600   0% &#x2F;sys&#x2F;fs&#x2F;cgroup</span><br><span class="line">&#x2F;dev&#x2F;sda1                 1038336   204736    833600  20% &#x2F;boot</span><br><span class="line">tmpfs                      815720       12    815708   1% &#x2F;run&#x2F;user&#x2F;42</span><br><span class="line">tmpfs                      815720        0    815720   0% &#x2F;run&#x2F;user&#x2F;0</span><br></pre></td></tr></table></figure>
+
+<h3 id="报错信息如下："><a href="#报错信息如下：" class="headerlink" title="报错信息如下："></a>报错信息如下：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# lvextend -L +50G &#x2F;dev&#x2F;mapper&#x2F;centos-root</span><br><span class="line">  Size of logical volume centos&#x2F;root changed from &lt;17.00 GiB (4351 extents) to &lt;67.00 GiB (17151 extents).</span><br><span class="line">  Logical volume centos&#x2F;root successfully resized.</span><br><span class="line">[root@localhost ~]# &#39;resize2fs &#x2F;dev&#x2F;mapper&#x2F;centos-root&#39;</span><br><span class="line">resize2fs 1.42.9 (28-Dec-2013)</span><br><span class="line">resize2fs: Bad magic number in super-block while trying to open &#x2F;dev&#x2F;mapper&#x2F;centos-root</span><br><span class="line">Couldn&#39;t find valid filesystem superblock.</span><br></pre></td></tr></table></figure>
+
+<h2 id="xfs格式的文件扩充需要用xfs-growfs命令来执行。"><a href="#xfs格式的文件扩充需要用xfs-growfs命令来执行。" class="headerlink" title="xfs格式的文件扩充需要用xfs_growfs命令来执行。"></a>xfs格式的文件扩充需要用<code>xfs_growfs</code>命令来执行。</h2><h3 id="结果如下："><a href="#结果如下：" class="headerlink" title="结果如下："></a>结果如下：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# xfs_growfs &#x2F;dev&#x2F;mapper&#x2F;centos-root</span><br><span class="line">meta-data&#x3D;&#x2F;dev&#x2F;mapper&#x2F;centos-root isize&#x3D;512    agcount&#x3D;4, agsize&#x3D;1113856 blks</span><br><span class="line">         &#x3D;                       sectsz&#x3D;512   attr&#x3D;2, projid32bit&#x3D;1</span><br><span class="line">         &#x3D;                       crc&#x3D;1        finobt&#x3D;0 spinodes&#x3D;0</span><br><span class="line">data     &#x3D;                       bsize&#x3D;4096   blocks&#x3D;4455424, imaxpct&#x3D;25</span><br><span class="line">         &#x3D;                       sunit&#x3D;0      swidth&#x3D;0 blks</span><br><span class="line">naming   &#x3D;version 2              bsize&#x3D;4096   ascii-ci&#x3D;0 ftype&#x3D;1</span><br><span class="line">log      &#x3D;internal               bsize&#x3D;4096   blocks&#x3D;2560, version&#x3D;2</span><br><span class="line">         &#x3D;                       sectsz&#x3D;512   sunit&#x3D;0 blks, lazy-count&#x3D;1</span><br><span class="line">realtime &#x3D;none                   extsz&#x3D;4096   blocks&#x3D;0, rtextents&#x3D;0</span><br><span class="line">data blocks changed from 4455424 to 17562624</span><br><span class="line">[root@localhost ~]# df</span><br><span class="line">Filesystem              1K-blocks     Used Available Use% Mounted on</span><br><span class="line">&#x2F;dev&#x2F;mapper&#x2F;centos-root  70240256 17811660  52428596  26% &#x2F;</span><br><span class="line">devtmpfs                  4061664        0   4061664   0% &#x2F;dev</span><br><span class="line">tmpfs                     4078600        4   4078596   1% &#x2F;dev&#x2F;shm</span><br><span class="line">tmpfs                     4078600    12536   4066064   1% &#x2F;run</span><br><span class="line">tmpfs                     4078600        0   4078600   0% &#x2F;sys&#x2F;fs&#x2F;cgroup</span><br><span class="line">&#x2F;dev&#x2F;sda1                 1038336   204736    833600  20% &#x2F;boot</span><br><span class="line">tmpfs                      815720       12    815708   1% &#x2F;run&#x2F;user&#x2F;42</span><br><span class="line">tmpfs                      815720        0    815720   0% &#x2F;run&#x2F;user&#x2F;0</span><br></pre></td></tr></table></figure>
+
+
 
     </div>
 
@@ -288,7 +270,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://unxlab.com/2019/03/08/Centos%207%E6%90%AD%E5%BB%BAGitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="Centos 7搭建Gitlab服务器">http://unxlab.com/2019/03/08/Centos 7搭建Gitlab服务器/</a>
+    <a href="http://unxlab.com/2020/01/02/open/" title="Linux磁盘扩容使用resize2fs命令报错详解">http://unxlab.com/2020/01/02/open/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -298,16 +280,23 @@
 
 
       <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2019/12/24/hello-world/" rel="next" title="Hello World">
-      Hello World <i class="fa fa-chevron-right"></i>
+    <a href="/2019/12/29/%E5%AE%89%E8%A3%85Zabbix%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="prev" title="安装Zabbix监控服务器">
+      <i class="fa fa-chevron-left"></i> 安装Zabbix监控服务器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/02/docker1/" rel="next" title="一、Docker与镜像介绍">
+      一、Docker与镜像介绍 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -368,7 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Centos-7搭建Gitlab服务器"><span class="nav-number">1.</span> <span class="nav-text">Centos 7搭建Gitlab服务器</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#resize2fs命令报错？"><span class="nav-number">1.</span> <span class="nav-text">resize2fs命令报错？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩容前容量使用率："><span class="nav-number">1.0.1.</span> <span class="nav-text">扩容前容量使用率：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#报错信息如下："><span class="nav-number">1.0.2.</span> <span class="nav-text">报错信息如下：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xfs格式的文件扩充需要用xfs-growfs命令来执行。"><span class="nav-number">1.1.</span> <span class="nav-text">xfs格式的文件扩充需要用xfs_growfs命令来执行。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结果如下："><span class="nav-number">1.1.1.</span> <span class="nav-text">结果如下：</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
